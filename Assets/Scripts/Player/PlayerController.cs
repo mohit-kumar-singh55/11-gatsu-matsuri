@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     #region Input Fields
     [SerializeField] float walkSpeed = 2f;
     [SerializeField] float sprintSpeed = 5f;
-    [SerializeField] float jumpForce = 5f;
+    [SerializeField] float jumpForce = 400f;
     [SerializeField] float groundCheckDistance = .3f;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] CinemachineCamera cm_cam;
@@ -21,14 +21,18 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private Vector2 moveInput;
     // private CameraController cameraController;
+    private bool isIdle = false;
     private bool isSprinting = false;
     private bool playerFreezed = false;      // to freeze player while game over
     private float _velocity = 0f;
     private int _velocityHash;
+    private int _standingJumpHash;
+    private int _runningJumpHash;
 
     // animator variables (アニメーター変数)
     const string ANIM_SPEED = "Velocity";
-    const string ANIM_JUMP = "jump";
+    const string ANIM_STANDING_JUMP = "StandingJump";
+    const string ANIM_RUNNING_JUMP = "RunningJump";
     #endregion
 
     void Awake()
@@ -55,6 +59,14 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _velocityHash = Animator.StringToHash(ANIM_SPEED);
+        _standingJumpHash = Animator.StringToHash(ANIM_STANDING_JUMP);
+        _runningJumpHash = Animator.StringToHash(ANIM_RUNNING_JUMP);
+    }
+
+    void Update()
+    {
+        if (rb.linearVelocity == Vector3.zero || rb.linearVelocity.magnitude < .05f) isIdle = true;
+        else isIdle = false;
     }
 
     void FixedUpdate()
@@ -116,26 +128,28 @@ public class PlayerController : MonoBehaviour
         UpdateMoveAnimation();
     }
 
-    void HandleJump()
-    {
-        if (IsGrounded() && !playerFreezed)
-        {
-            animator.SetTrigger(ANIM_JUMP);
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
-    }
-
     // ** updating move animation in blend tree (移動アニメーションを更新する) **
     void UpdateMoveAnimation()
     {
         float targetVelocity;
 
-        if (rb.linearVelocity == Vector3.zero || rb.linearVelocity.magnitude < .05f) targetVelocity = 0f;
+        if (isIdle) targetVelocity = 0f;
         else targetVelocity = rb.linearVelocity.magnitude / sprintSpeed;
 
         _velocity = Mathf.Lerp(_velocity, targetVelocity, Time.deltaTime * 5f);
 
         animator.SetFloat(_velocityHash, _velocity);
+    }
+
+    void HandleJump()
+    {
+        if (IsGrounded() && !playerFreezed)
+        {
+            if (isIdle) animator.SetTrigger(_standingJumpHash);
+            else animator.SetTrigger(_runningJumpHash);
+
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
     }
 
     bool IsGrounded() => Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
