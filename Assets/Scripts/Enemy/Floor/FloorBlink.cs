@@ -6,8 +6,8 @@ public class FloorBlink : MonoBehaviour
 {
     [SerializeField] private float blinkInterval = 5.0f;
 
-    Collider col;
-    MeshRenderer mesh;
+    private Collider col;
+    private MeshRenderer mesh;
 
     void Awake()
     {
