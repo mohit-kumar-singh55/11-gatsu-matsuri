@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider), typeof(MeshRenderer))]
 public class FloorBlink : MonoBehaviour
 {
-    [SerializeField] private float blinkInterval = 5.0f;
+    [SerializeField] float blinkInterval = 5.0f;
 
     private Collider col;
     private MeshRenderer mesh;
