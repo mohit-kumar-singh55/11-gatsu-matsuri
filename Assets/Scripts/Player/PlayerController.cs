@@ -12,6 +12,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float sprintSpeed = 5f;
     [SerializeField] float jumpForce = 400f;
     [SerializeField] float groundCheckDistance = .3f;
+    [Tooltip("スタミナが0になるまでの秒数")]
+    [SerializeField] float staminaInSeconds = 4f;
+    [Tooltip("スタミナが最大まで回復するまでの秒数")]
+    [SerializeField] float timeToRegenerateStamina = 4f;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] CinemachineCamera cm_cam;
     #endregion
@@ -25,6 +29,7 @@ public class PlayerController : MonoBehaviour
     private bool isSprinting = false;
     private bool playerFreezed = false;      // to freeze player while game over
     private float _velocity = 0f;
+    private float _curStamina;
     private int _velocityHash;
     private int _standingJumpHash;
     private int _runningJumpHash;
@@ -54,6 +59,9 @@ public class PlayerController : MonoBehaviour
         // ** hiding cursor (カーソルを隠す) **
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        // ** initializing (初期化) **
+        _curStamina = staminaInSeconds;
     }
 
     void Start()
@@ -72,6 +80,9 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         HandleMove();
+        HandleStamina();
+
+        Debug.Log(_curStamina);
     }
 
     // ** Input System - Callbacks (入力システム - コールバック) **
@@ -119,7 +130,8 @@ public class PlayerController : MonoBehaviour
         }
 
         // ** moving player (プレイヤーを移動させる) **
-        Vector3 targetVelocity = move * (isSprinting ? sprintSpeed : walkSpeed);
+        bool canSprint = isSprinting && _curStamina > 0f;
+        Vector3 targetVelocity = move * (canSprint ? sprintSpeed : walkSpeed);
         Vector3 velocityChange = targetVelocity - rb.linearVelocity;
         velocityChange.y = 0;
 
@@ -153,4 +165,14 @@ public class PlayerController : MonoBehaviour
     }
 
     bool IsGrounded() => Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
+
+    void HandleStamina()
+    {
+        if (!isSprinting && _curStamina >= staminaInSeconds) return;
+
+        if (isSprinting && moveInput != Vector2.zero) _curStamina -= Time.deltaTime;
+        else _curStamina += (staminaInSeconds / timeToRegenerateStamina) * Time.deltaTime;
+
+        _curStamina = Mathf.Clamp(_curStamina, 0f, staminaInSeconds);
+    }
 }
