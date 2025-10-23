@@ -169,7 +169,7 @@ public class PlayerController : MonoBehaviour
         if (!isSprinting && _curStamina >= staminaInSeconds) return;
 
         if (isSprinting && moveInput != Vector2.zero) _curStamina -= Time.deltaTime;
-        else _curStamina += (staminaInSeconds / timeToRegenerateStamina) * Time.deltaTime;
+        else _curStamina += staminaInSeconds / timeToRegenerateStamina * Time.deltaTime;
 
         _curStamina = Mathf.Clamp(_curStamina, 0f, staminaInSeconds);
     }

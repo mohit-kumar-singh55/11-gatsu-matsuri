@@ -52,10 +52,14 @@ public class EnemyController : MonoBehaviour
     // private Vector3 startingPosition;
     // private AudioManager audioManager;
 
+    // for animator
+    private float _velocity = 0f;
+    private int _velocityHash;
+    private int _isAttackingHash;
+
     // animator variables (アニメーター変数)
-    const string ANIM_RUNNING = "isRunning";
+    const string ANIM_SPEED = "speed";
     const string ANIM_ATTACKING = "isAttacking";
-    const string ANIM_INSPECTING = "isInspecting";
 
     public EnemyState CurrentState => currentState;
     #endregion
@@ -77,6 +81,9 @@ public class EnemyController : MonoBehaviour
         animator = GetComponent<Animator>();
         enemyAttack = GetComponent<EnemyAttack>();
 
+        _velocityHash = Animator.StringToHash(ANIM_SPEED);
+        _isAttackingHash = Animator.StringToHash(ANIM_ATTACKING);
+
         // audioManager = AudioManager.Instance;
     }
 
@@ -91,6 +98,11 @@ public class EnemyController : MonoBehaviour
                 ChasingBehaviour();
                 break;
         }
+    }
+
+    void FixedUpdate()
+    {
+        UpdateMoveAnimation();
     }
 
     /// <summary>
@@ -130,11 +142,10 @@ public class EnemyController : MonoBehaviour
 
     void ChasingBehaviour()
     {
-        if (enemyAttack.IsKicking) return;
+        if (enemyAttack.IsAttacking) return;
 
         agent.speed = chaseSpeed;
         agent.SetDestination(player.position);      // follow player
-        animator.SetBool(ANIM_RUNNING, true);        // set running animation
 
         // stopping bgm audios
         // audioManager.StopBGM();
@@ -145,8 +156,7 @@ public class EnemyController : MonoBehaviour
             float distToPlayer = Vector3.Distance(transform.position, player.position);
 
             // ********** Attack **********
-            // attack if player is close and player is not above the enemy's head
-            // if (distToPlayer <= attackDistance && player.position.y < 1.5f && !PlayerController.Instance.WasKickBefore)
+            // attack if player is close enough
             if (distToPlayer <= attackDistance)
             {
                 // slow motion sfx
@@ -154,8 +164,7 @@ public class EnemyController : MonoBehaviour
 
                 // stopping agent and attack
                 agent.isStopped = true;
-                enemyAttack.Attack(ANIM_ATTACKING);
-                // PlayerController.Instance.SetWasKickedBefore();
+                enemyAttack.Attack(_isAttackingHash);
 
                 Debug.Log("🗡️ Attacking player");
             }
@@ -174,8 +183,6 @@ public class EnemyController : MonoBehaviour
             {
                 // stopping and playing suspicious (inspecting) animation
                 agent.isStopped = true;
-                animator.SetBool(ANIM_RUNNING, false);        // set running animation
-                animator.SetBool(ANIM_INSPECTING, true);        // set inspecting animation
                 Debug.Log("🔍 Inspecting the place");
 
                 // suspicious (inspecting) cooldown timer
@@ -189,7 +196,6 @@ public class EnemyController : MonoBehaviour
 
                     agent.isStopped = false;
                     currentState = EnemyState.Patrol;
-                    animator.SetBool(ANIM_INSPECTING, false);        // set inspecting animation
 
                     Debug.Log("👁️ Lost player. Returning to patrol.");
                 }
@@ -228,6 +234,19 @@ public class EnemyController : MonoBehaviour
         if (Physics.Raycast(enemyPosition, dirToPlayer, distToPlayer, obstacleMask)) return false;
 
         return true;
+    }
+
+    // ** updating move animation in blend tree (移動アニメーションを更新する) **
+    void UpdateMoveAnimation()
+    {
+        float targetVelocity;
+
+        if (agent.velocity == Vector3.zero) targetVelocity = 0f;
+        else targetVelocity = agent.velocity.magnitude / chaseSpeed;
+
+        _velocity = Mathf.Lerp(_velocity, targetVelocity, Time.deltaTime * 5f);
+
+        animator.SetFloat(_velocityHash, _velocity);
     }
 
     // Disables this script after triggering the lose condition.

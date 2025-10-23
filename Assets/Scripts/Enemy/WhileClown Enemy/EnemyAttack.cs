@@ -12,9 +12,9 @@ public class EnemyAttack : MonoBehaviour
     private PlayerController playerController;
     // private CameraController cameraController;
 
-    private bool isKicking = false;
+    private bool isAttacking = false;
 
-    public bool IsKicking => isKicking;
+    public bool IsAttacking => isAttacking;
 
     void Start()
     {
@@ -27,18 +27,18 @@ public class EnemyAttack : MonoBehaviour
     }
 
     // NPCがプレイヤーを蹴る
-    public void Attack(string ANIM_ATTACKING)
+    public void Attack(int attackAnimHash)
     {
-        if (isKicking) return;
+        if (isAttacking) return;
 
-        isKicking = true;
-        StartCoroutine(PlayKickSequence(ANIM_ATTACKING));     // attacking sequence (キックシーケンス)
+        isAttacking = true;
+        StartCoroutine(PlayKickSequence(attackAnimHash));     // attacking sequence (キックシーケンス)
 
         // Decreasing Health (健康の低下)
         // PlayerSystem.Instance.TakeDamage(true);
     }
 
-    IEnumerator PlayKickSequence(string ANIM_ATTACKING)
+    IEnumerator PlayKickSequence(int attackAnimHash)
     {
         // ** 🔁 Step 1: Disable player control (プレイヤーの操作を無効にする) **
         // playerController.enabled = false;
@@ -53,10 +53,10 @@ public class EnemyAttack : MonoBehaviour
         // Time.fixedDeltaTime = 0.02f * Time.timeScale;       // for physics (物理学のために)
 
         // ** 🔁 Step 4: Play kick animation (キックアニメーションを再生する) **
-        animator.SetTrigger(ANIM_ATTACKING);
+        animator.SetTrigger(attackAnimHash);
 
-        // ** 🔁 Step 5: Wait until foot reaches player (足がプレイヤーに届くまで待ってください) **
-        // yield return new WaitForSecondsRealtime(2.2f); // ➀  ↓
+        // ** 🔁 Step 5: Wait for attack animation to over **
+        yield return new WaitForSecondsRealtime(2.2f); // ➀  ↓
 
         // playing kicked sfx (キックの効果音を再生中)
         // AudioManager.Instance.PlayKickExplosionSFX();
@@ -90,6 +90,6 @@ public class EnemyAttack : MonoBehaviour
         // ** waiting for player to go outoff enemy view range (敵の視界範囲から出るのを待っているプレイヤー) **
         yield return new WaitForSeconds(.3f);
 
-        isKicking = false;
+        isAttacking = false;
     }
 }

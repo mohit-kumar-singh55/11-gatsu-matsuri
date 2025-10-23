@@ -522,7 +522,7 @@ PrefabInstance:
     - target: {fileID: 5866666021909216657, guid: e9cbf801a913dfd488a3c0cdda81bb16, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 8ecacbd554c56584c85357884c7d1108, type: 2}
+      objectReference: {fileID: 9100000, guid: d882c06b5b88be741885fc52fa4889ce, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -588,10 +588,10 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 64
-  detectionTime: 2
+  detectionTime: 1
   walkSpeed: 3
-  chaseSpeed: 5
-  attackDistance: 2
+  chaseSpeed: 6
+  attackDistance: 1
   losePlayerTime: 3
   inspectionTime: 3
 --- !u!114 &243901403
