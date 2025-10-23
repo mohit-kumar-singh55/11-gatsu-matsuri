@@ -21,7 +21,6 @@ public class EnemyController : MonoBehaviour
     [SerializeField] EnemyState currentState = EnemyState.Patrol;
 
     [Header("Vision Settings")]
-    [SerializeField] Transform eyePosition; // eye position of the enemy (敵の目の位置)
     [SerializeField] float viewRadius = 10f;
     [Range(0f, 360f)][SerializeField] float viewAngle = 90f;
     [SerializeField] LayerMask obstacleMask;      // like wall, rocks, etc (壁や岩など)
@@ -219,7 +218,6 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     bool IsPlayerInSight()
     {
-        // Vector3 enemyPosition = eyePosition ? eyePosition.position : (transform.position + Vector3.up * 1.5f);
         Vector3 enemyPosition = transform.position;
         Vector3 dirToPlayer = (player.position - enemyPosition).normalized;
         float distToPlayer = Vector3.Distance(enemyPosition, player.position);
