@@ -81,8 +81,6 @@ public class PlayerController : MonoBehaviour
     {
         HandleMove();
         HandleStamina();
-
-        Debug.Log(_curStamina);
     }
 
     // ** Input System - Callbacks (入力システム - コールバック) **
