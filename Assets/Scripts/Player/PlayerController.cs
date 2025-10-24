@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody), typeof(PlayerInput), typeof(Animator))]
+[RequireComponent(typeof(RagdollEnabler), typeof(Collider))]
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance { get; private set; }
@@ -23,6 +24,8 @@ public class PlayerController : MonoBehaviour
     #region Properties
     private Rigidbody rb;
     private Animator animator;
+    private RagdollEnabler ragdollEnabler;
+    private Collider col;
     private Vector2 moveInput;
     // private CameraController cameraController;
     private bool isIdle = false;
@@ -54,6 +57,8 @@ public class PlayerController : MonoBehaviour
         // ** getting components **
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        ragdollEnabler = GetComponent<RagdollEnabler>();
+        col = GetComponent<Collider>();
         // cameraController = GetComponent<CameraController>();
 
         // ** hiding cursor (カーソルを隠す) **
@@ -69,6 +74,9 @@ public class PlayerController : MonoBehaviour
         _velocityHash = Animator.StringToHash(ANIM_SPEED);
         _standingJumpHash = Animator.StringToHash(ANIM_STANDING_JUMP);
         _runningJumpHash = Animator.StringToHash(ANIM_RUNNING_JUMP);
+
+        // disable ragdoll at start
+        EnableRagdoll(false);
     }
 
     void Update()
@@ -81,8 +89,6 @@ public class PlayerController : MonoBehaviour
     {
         HandleMove();
         HandleStamina();
-
-        Debug.Log(_curStamina);
     }
 
     // ** Input System - Callbacks (入力システム - コールバック) **
@@ -101,8 +107,13 @@ public class PlayerController : MonoBehaviour
         isSprinting = value.Get<float>() == 1f;
     }
 
-    // ** freeze player movements (プレイヤーの動きを止める) **
-    public void FreezePlayer(bool freeze = true) => playerFreezed = freeze;
+    // ** freeze player movements and animations (プレイヤーの動きを止める) **
+    public void FreezePlayer(bool freeze = true)
+    {
+        playerFreezed = freeze;
+        rb.linearVelocity = Vector3.zero;
+        UpdateMoveAnimation();
+    }
 
     // ** handling player movements (プレイヤーの動きを制御する) **
     void HandleMove()
@@ -145,7 +156,7 @@ public class PlayerController : MonoBehaviour
     {
         float targetVelocity;
 
-        if (isIdle) targetVelocity = 0f;
+        if (isIdle || playerFreezed) targetVelocity = 0f;
         else targetVelocity = rb.linearVelocity.magnitude / sprintSpeed;
 
         _velocity = Mathf.Lerp(_velocity, targetVelocity, Time.deltaTime * 5f);
@@ -171,8 +182,15 @@ public class PlayerController : MonoBehaviour
         if (!isSprinting && _curStamina >= staminaInSeconds) return;
 
         if (isSprinting && moveInput != Vector2.zero) _curStamina -= Time.deltaTime;
-        else _curStamina += (staminaInSeconds / timeToRegenerateStamina) * Time.deltaTime;
+        else _curStamina += staminaInSeconds / timeToRegenerateStamina * Time.deltaTime;
 
         _curStamina = Mathf.Clamp(_curStamina, 0f, staminaInSeconds);
+    }
+
+    public void EnableRagdoll(bool enable = true)
+    {
+        col.enabled = !enable;    // disable main collider when ragdoll is enabled
+        rb.isKinematic = enable;   // disable main rigidbody when ragdoll is enabled
+        ragdollEnabler.EnableRagdoll(enable);
     }
 }

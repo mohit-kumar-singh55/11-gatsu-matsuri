@@ -14,9 +14,9 @@ TagManager:
   - Ground
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Obstacle
+  - Player Ragdoll Collisions Layer
+  - Enemy Bones Collisions Layer
   - 
   - 
   - 
