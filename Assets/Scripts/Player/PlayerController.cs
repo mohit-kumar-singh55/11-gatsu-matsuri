@@ -99,8 +99,12 @@ public class PlayerController : MonoBehaviour
         isSprinting = value.Get<float>() == 1f;
     }
 
-    // ** freeze player movements (プレイヤーの動きを止める) **
-    public void FreezePlayer(bool freeze = true) => playerFreezed = freeze;
+    // ** freeze player movements and animations (プレイヤーの動きを止める) **
+    public void FreezePlayer(bool freeze = true)
+    {
+        playerFreezed = freeze;
+        animator.enabled = !freeze;
+    }
 
     // ** handling player movements (プレイヤーの動きを制御する) **
     void HandleMove()
@@ -143,7 +147,7 @@ public class PlayerController : MonoBehaviour
     {
         float targetVelocity;
 
-        if (isIdle) targetVelocity = 0f;
+        if (isIdle || playerFreezed) targetVelocity = 0f;
         else targetVelocity = rb.linearVelocity.magnitude / sprintSpeed;
 
         _velocity = Mathf.Lerp(_velocity, targetVelocity, Time.deltaTime * 5f);

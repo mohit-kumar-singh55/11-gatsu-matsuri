@@ -165,6 +165,9 @@ public class EnemyController : MonoBehaviour
                 agent.isStopped = true;
                 enemyAttack.Attack(_isAttackingHash);
 
+                // *** trigger lose condition for player ***
+                TriggerLose();
+
                 Debug.Log("🗡️ Attacking player");
             }
             else agent.isStopped = false;
@@ -254,6 +257,8 @@ public class EnemyController : MonoBehaviour
         // stop all audios
         // audioManager.StopBGM();
 
+        agent.isStopped = true;
+        animator.SetFloat(_velocityHash, 0f);
         enabled = false;
     }
 
