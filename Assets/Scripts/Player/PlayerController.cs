@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody), typeof(PlayerInput), typeof(Animator))]
+[RequireComponent(typeof(RagdollEnabler), typeof(Collider))]
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance { get; private set; }
@@ -23,6 +24,8 @@ public class PlayerController : MonoBehaviour
     #region Properties
     private Rigidbody rb;
     private Animator animator;
+    private RagdollEnabler ragdollEnabler;
+    private Collider col;
     private Vector2 moveInput;
     // private CameraController cameraController;
     private bool isIdle = false;
@@ -54,6 +57,8 @@ public class PlayerController : MonoBehaviour
         // ** getting components **
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        ragdollEnabler = GetComponent<RagdollEnabler>();
+        col = GetComponent<Collider>();
         // cameraController = GetComponent<CameraController>();
 
         // ** hiding cursor (カーソルを隠す) **
@@ -69,6 +74,9 @@ public class PlayerController : MonoBehaviour
         _velocityHash = Animator.StringToHash(ANIM_SPEED);
         _standingJumpHash = Animator.StringToHash(ANIM_STANDING_JUMP);
         _runningJumpHash = Animator.StringToHash(ANIM_RUNNING_JUMP);
+
+        // disable ragdoll at start
+        EnableRagdoll(false);
     }
 
     void Update()
@@ -103,7 +111,8 @@ public class PlayerController : MonoBehaviour
     public void FreezePlayer(bool freeze = true)
     {
         playerFreezed = freeze;
-        animator.enabled = !freeze;
+        rb.linearVelocity = Vector3.zero;
+        UpdateMoveAnimation();
     }
 
     // ** handling player movements (プレイヤーの動きを制御する) **
@@ -176,5 +185,12 @@ public class PlayerController : MonoBehaviour
         else _curStamina += staminaInSeconds / timeToRegenerateStamina * Time.deltaTime;
 
         _curStamina = Mathf.Clamp(_curStamina, 0f, staminaInSeconds);
+    }
+
+    public void EnableRagdoll(bool enable = true)
+    {
+        col.enabled = !enable;    // disable main collider when ragdoll is enabled
+        rb.isKinematic = enable;   // disable main rigidbody when ragdoll is enabled
+        ragdollEnabler.EnableRagdoll(enable);
     }
 }

@@ -27,12 +27,13 @@ public class EnemyAttack : MonoBehaviour
         if (isAttacking) return;
 
         isAttacking = true;
-        StartCoroutine(PlayKickSequence(attackAnimHash));     // attacking sequence
+        StartCoroutine(PlayAttackSequence(attackAnimHash));     // attacking sequence
     }
 
-    IEnumerator PlayKickSequence(int attackAnimHash)
+    IEnumerator PlayAttackSequence(int attackAnimHash)
     {
         // ** 🔁 Step 1: Disable player control (プレイヤーの操作を無効にする) **
+        playerController.FreezePlayer(true);
         playerController.enabled = false;
 
         // ** 🔁 Step 2: Switch to cinematic camera (シネマティックカメラに切り替える) **
@@ -40,7 +41,7 @@ public class EnemyAttack : MonoBehaviour
 
         // ** 🔁 Step 3: Slow down time (時間を遅くする) **
         Time.timeScale = 0.15f;
-        Time.fixedDeltaTime = 0.02f * Time.timeScale;       // for physics (物理学のために)
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
         // ** 🔁 Step 4: Play attack animation (アニメーションを再生する) **
         animator.SetTrigger(attackAnimHash);
@@ -64,8 +65,6 @@ public class EnemyAttack : MonoBehaviour
         // AudioManager.Instance.PlayBGM();
 
         // ** 🔁 Step 7: Disabling animations **
-        playerController.enabled = true;
-        playerController.FreezePlayer(true);
         playerController.enabled = false;
 
         isAttacking = false;

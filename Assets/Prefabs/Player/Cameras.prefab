@@ -162,7 +162,7 @@ MonoBehaviour:
     DefaultMode: 2
   DefaultBlend:
     Style: 1
-    Time: 2
+    Time: 0.1
     CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -198,8 +198,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4833473100531231171}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.06997344, y: -0.63397205, z: 0.057760864, w: 0.7680149}
-  m_LocalPosition: {x: -11.61, y: 3.27, z: 8.9}
+  m_LocalRotation: {x: -0.042490877, y: 0.9181669, z: -0.102582045, w: -0.38031718}
+  m_LocalPosition: {x: -12.32, y: 3.27, z: 10.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -266,7 +266,7 @@ MonoBehaviour:
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
-  FollowOffset: {x: 1.71, y: 0, z: -0.33}
+  FollowOffset: {x: 1, y: 0, z: 1}
 --- !u!114 &1383934186465629250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,6 +312,7 @@ GameObject:
   - component: {fileID: 3600354030487898613}
   - component: {fileID: 9120923282141718074}
   - component: {fileID: 8533265153868414827}
+  - component: {fileID: 6489675626004085463}
   m_Layer: 0
   m_Name: CM_FOLLOW_CAM
   m_TagString: Untagged
@@ -561,6 +562,30 @@ MonoBehaviour:
   AmplitudeGain: 1
   FrequencyGain: 1
   m_NoiseOffsets: {x: 0, y: 0, z: 0}
+--- !u!114 &6489675626004085463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5622775892681763908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseListener
+  ApplyAfter: 2
+  ChannelMask: 1
+  Gain: 1
+  Use2DDistance: 0
+  UseCameraSpace: 1
+  SignalCombinationMode: 0
+  ReactionSettings:
+    m_SecondaryNoise: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    Duration: 1
+    m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &6959703378429609884
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,14 +636,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseSource
   ImpulseDefinition:
     ImpulseChannel: 1
-    ImpulseShape: 2
+    ImpulseShape: 4
     CustomImpulseShape:
       serializedVersion: 2
       m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    ImpulseDuration: 0.2
+    ImpulseDuration: 0.5
     ImpulseType: 0
     DissipationRate: 0.25
     RawSignal: {fileID: 0}
@@ -649,7 +674,7 @@ MonoBehaviour:
     DissipationMode: 2
     DissipationDistance: 100
     PropagationSpeed: 343
-  DefaultVelocity: {x: 0, y: -1, z: 0}
+  DefaultVelocity: {x: -0.01, y: -0.01, z: 0.01}
 --- !u!114 &8161535835701159761
 MonoBehaviour:
   m_ObjectHideFlags: 0
