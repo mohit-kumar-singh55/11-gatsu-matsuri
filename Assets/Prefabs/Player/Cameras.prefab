@@ -636,7 +636,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseSource
   ImpulseDefinition:
     ImpulseChannel: 1
-    ImpulseShape: 4
+    ImpulseShape: 3
     CustomImpulseShape:
       serializedVersion: 2
       m_Curve: []
@@ -674,7 +674,7 @@ MonoBehaviour:
     DissipationMode: 2
     DissipationDistance: 100
     PropagationSpeed: 343
-  DefaultVelocity: {x: -0.01, y: -0.01, z: 0.01}
+  DefaultVelocity: {x: -0.005, y: -0.005, z: 0.005}
 --- !u!114 &8161535835701159761
 MonoBehaviour:
   m_ObjectHideFlags: 0

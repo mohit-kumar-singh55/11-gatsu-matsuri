@@ -47,7 +47,7 @@ public class EnemyAttack : MonoBehaviour
         animator.SetTrigger(attackAnimHash);
 
         // ** 🔁 Step 5: Wait for attack animation to over **
-        yield return new WaitForSecondsRealtime(2.2f);
+        yield return new WaitForSecondsRealtime(3.5f);
 
         // playing attacked sfx (被攻撃の効果音を再生中)
         // AudioManager.Instance.PlayKickExplosionSFX();
