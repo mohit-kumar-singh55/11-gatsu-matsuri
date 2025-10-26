@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -36,6 +37,9 @@ public class PlayerController : MonoBehaviour
     private int _velocityHash;
     private int _standingJumpHash;
     private int _runningJumpHash;
+    private bool _freezeStamina = false;
+
+    public bool FreezeStamina { get => _freezeStamina; set => _freezeStamina = value; }
 
     // animator variables (アニメーター変数)
     const string ANIM_SPEED = "Velocity";
@@ -179,7 +183,7 @@ public class PlayerController : MonoBehaviour
 
     void HandleStamina()
     {
-        if (!isSprinting && _curStamina >= staminaInSeconds) return;
+        if ((!isSprinting && _curStamina >= staminaInSeconds) || _freezeStamina) return;
 
         if (isSprinting && moveInput != Vector2.zero) _curStamina -= Time.deltaTime;
         else _curStamina += staminaInSeconds / timeToRegenerateStamina * Time.deltaTime;
@@ -192,5 +196,16 @@ public class PlayerController : MonoBehaviour
         col.enabled = !enable;    // disable main collider when ragdoll is enabled
         rb.isKinematic = enable;   // disable main rigidbody when ragdoll is enabled
         ragdollEnabler.EnableRagdoll(enable);
+    }
+
+    public void RestartStaminaDepletionAfterDelay(float delay)
+    {
+        StartCoroutine(RestartStaminaDepletion(delay));
+    }
+
+    private IEnumerator RestartStaminaDepletion(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        _freezeStamina = false;
     }
 }
