@@ -1,10 +1,23 @@
 using System.Collections;
+using System.Diagnostics;
+using System.Globalization;
+using System.Threading;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider), typeof(MeshRenderer))]
 public class FloorBlink : MonoBehaviour
 {
+    private enum ProcessSelect
+    {
+        Blink,
+        Stand
+    }
+
+    [SerializeField] private ProcessSelect processSelect;
     [SerializeField] private float blinkInterval = 5.2f;
+    [SerializeField] private float standInterval = 2.0f;
+
+    private bool isStand = false;
 
     private Collider col;
     private MeshRenderer mesh;
@@ -17,7 +30,10 @@ public class FloorBlink : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(BlinkCoroutine());
+        if (processSelect == ProcessSelect.Blink)
+        {
+            StartCoroutine(BlinkCoroutine());
+        }
     }
 
     void BlinkSelf(bool appear = true)
@@ -38,6 +54,25 @@ public class FloorBlink : MonoBehaviour
             BlinkSelf(appear);
 
             appear = !appear;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            isStand = true;
+            StartCoroutine(StandDelayCoroutine());
+        }
+    }
+
+    IEnumerator StandDelayCoroutine()
+    {
+        if (isStand)
+        {
+            yield return new WaitForSeconds(standInterval);
+
+            Destroy(gameObject);
         }
     }
 }
