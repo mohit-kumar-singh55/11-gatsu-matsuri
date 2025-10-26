@@ -1,23 +1,16 @@
 using System.Collections;
-using System.Diagnostics;
-using System.Globalization;
-using System.Threading;
 using UnityEngine;
+
+enum Mode { Blink, DestroyOnceEntered }
 
 [RequireComponent(typeof(Collider), typeof(MeshRenderer))]
 public class FloorBlink : MonoBehaviour
 {
-    private enum ProcessSelect
-    {
-        Blink,
-        Stand
-    }
-
-    [SerializeField] private ProcessSelect processSelect;
+    [SerializeField] private Mode mode = Mode.Blink;
     [SerializeField] private float blinkInterval = 5.2f;
-    [SerializeField] private float standInterval = 2.0f;
+    [SerializeField] private float destroyAfterEntring = 2.0f;
 
-    private bool isStand = false;
+    private bool hasTriggeredDestroy = false;
 
     private Collider col;
     private MeshRenderer mesh;
@@ -30,10 +23,7 @@ public class FloorBlink : MonoBehaviour
 
     void Start()
     {
-        if (processSelect == ProcessSelect.Blink)
-        {
-            StartCoroutine(BlinkCoroutine());
-        }
+        if (mode == Mode.Blink) StartCoroutine(BlinkOrDestroyCoroutine());
     }
 
     void BlinkSelf(bool appear = true)
@@ -42,37 +32,36 @@ public class FloorBlink : MonoBehaviour
         mesh.enabled = appear;
     }
 
-    IEnumerator BlinkCoroutine()
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (mode != Mode.DestroyOnceEntered || hasTriggeredDestroy) return;
+
+        if (collision.gameObject.CompareTag(TAGS.PLAYER))
+        {
+            hasTriggeredDestroy = true;
+            StartCoroutine(BlinkOrDestroyCoroutine());
+        }
+    }
+
+    IEnumerator BlinkOrDestroyCoroutine()
     {
         bool appear = false;
 
+        bool isBlink = mode == Mode.Blink;
+
         while (true)
         {
-            yield return new WaitForSeconds(blinkInterval);
+            yield return new WaitForSeconds(isBlink ? blinkInterval : destroyAfterEntring);
 
             // フロア点滅オブジェクトを切り替え
-            BlinkSelf(appear);
+            if (isBlink) BlinkSelf(appear);
+            else
+            {
+                Destroy(gameObject);
+                yield break;
+            }
 
             appear = !appear;
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            isStand = true;
-            StartCoroutine(StandDelayCoroutine());
-        }
-    }
-
-    IEnumerator StandDelayCoroutine()
-    {
-        if (isStand)
-        {
-            yield return new WaitForSeconds(standInterval);
-
-            Destroy(gameObject);
         }
     }
 }

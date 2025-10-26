@@ -243,9 +243,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1276145555c72043b39fb6a326eaf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
-  processSelect: 0
+  mode: 0
   blinkInterval: 5
-  standInterval: 2
+  destroyAfterEntring: 2
 --- !u!1 &194439753
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,9 +880,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1276145555c72043b39fb6a326eaf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
-  processSelect: 1
+  mode: 1
   blinkInterval: 5.2
-  standInterval: 2
+  destroyAfterEntring: 2
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
