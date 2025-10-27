@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -36,6 +37,9 @@ public class PlayerController : MonoBehaviour
     private int _velocityHash;
     private int _standingJumpHash;
     private int _runningJumpHash;
+    private bool _freezeStamina = false;
+
+    public bool FreezeStamina { get => _freezeStamina; set => _freezeStamina = value; }
 
     // animator variables (アニメーター変数)
     const string ANIM_SPEED = "Velocity";
@@ -179,7 +183,7 @@ public class PlayerController : MonoBehaviour
 
     void HandleStamina()
     {
-        if (!isSprinting && _curStamina >= staminaInSeconds) return;
+        if ((!isSprinting && _curStamina >= staminaInSeconds) || _freezeStamina) return;
 
         if (isSprinting && moveInput != Vector2.zero) _curStamina -= Time.deltaTime;
         else _curStamina += staminaInSeconds / timeToRegenerateStamina * Time.deltaTime;
@@ -192,5 +196,65 @@ public class PlayerController : MonoBehaviour
         col.enabled = !enable;    // disable main collider when ragdoll is enabled
         rb.isKinematic = enable;   // disable main rigidbody when ragdoll is enabled
         ragdollEnabler.EnableRagdoll(enable);
+    }
+
+    public void RestartStaminaDepletionAfterDelay(float delay)
+    {
+        StartCoroutine(RestartStaminaDepletion(delay));
+    }
+
+    public void ChangeStaminaForSomeTime(float multipleOfStaminaDepletionSpeed, float duration)
+    {
+        float originalStamina = staminaInSeconds;
+
+        staminaInSeconds *= multipleOfStaminaDepletionSpeed;
+
+        StartCoroutine(ResetStamina(duration, originalStamina));
+    }
+
+    public void ChangeBothSpeedForSomeTime(float multipleOfSpeed, float duration)
+    {
+        float originalWalkSpeed = walkSpeed;
+        float originalSprintSpeed = sprintSpeed;
+
+        walkSpeed *= multipleOfSpeed;
+        sprintSpeed *= multipleOfSpeed;
+
+        StartCoroutine(ResetBothSpeed(duration, originalWalkSpeed, originalSprintSpeed));
+    }
+
+    public void ChangeJumpForceForSomeTime(float multipleOfJumpForce, float duration)
+    {
+        float originalJumptPower = jumpForce;
+
+        jumpForce *= multipleOfJumpForce;
+
+        StartCoroutine(ResetJumpForce(duration, originalJumptPower));
+    }
+
+    // ** Coroutines **
+    private IEnumerator RestartStaminaDepletion(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        _freezeStamina = false;
+    }
+
+    private IEnumerator ResetBothSpeed(float delay, float originalWalkSpeed, float originalSprintSpeed)
+    {
+        yield return new WaitForSeconds(delay);
+        walkSpeed = originalWalkSpeed;
+        sprintSpeed = originalSprintSpeed;
+    }
+
+    private IEnumerator ResetJumpForce(float delay, float originalJumpForce)
+    {
+        yield return new WaitForSeconds(delay);
+        jumpForce = originalJumpForce;
+    }
+
+    private IEnumerator ResetStamina(float delay, float originalStamina)
+    {
+        yield return new WaitForSeconds(delay);
+        staminaInSeconds = originalStamina;
     }
 }

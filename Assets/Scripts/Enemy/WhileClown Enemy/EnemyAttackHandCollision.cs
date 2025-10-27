@@ -2,11 +2,20 @@ using UnityEngine;
 
 public class EnemyAttackHandCollision : MonoBehaviour
 {
+    private Collider col;
+    private EnemyAttack enemyAttack;
     private PlayerController playerController;
 
     void Start()
     {
+        col = GetComponent<Collider>();
+        enemyAttack = GetComponentInParent<EnemyAttack>();
         playerController = PlayerController.Instance;
+    }
+
+    void FixedUpdate()
+    {
+        if (enemyAttack.IsAttacking) col.enabled = true;
     }
 
     void OnTriggerEnter(Collider other)
