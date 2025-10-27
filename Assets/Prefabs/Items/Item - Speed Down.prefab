@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3147384043456396875}
   - component: {fileID: 3812386950587438861}
-  - component: {fileID: 1084415951000786049}
+  - component: {fileID: 9003602438021757875}
   m_Layer: 0
-  m_Name: Item - Jump Power Up
+  m_Name: Item - Speed Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9160466550412170836}
+  - {fileID: 3853358684648442783}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &3812386950587438861
@@ -51,11 +51,11 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1084415951000786049
+--- !u!114 &9003602438021757875
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64,12 +64,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1180414736781194734}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 152da8ef73ae23747805549c346b339f, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c60668a92c20a34392875412edc073a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::JumpPowerUp
-  multipleOfJumpForce: 1.3
-  jumpForceUpDuration: 10
---- !u!1001 &4910720821632679276
+  m_EditorClassIdentifier: Assembly-CSharp::SpeedUp
+  multipleOfSpeed: 0.7
+  speedUpDuration: 10
+--- !u!1001 &1044553726218395815
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -80,7 +80,7 @@ PrefabInstance:
     - target: {fileID: 185669850350649087, guid: 947330af48601044baf05fddfb374de3, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: d95c607bb630309428295615ed9f244e, type: 2}
+      objectReference: {fileID: 2100000, guid: 4d6c5659372e394479c018f92e7b34b2, type: 2}
     - target: {fileID: 4253334677691951928, guid: 947330af48601044baf05fddfb374de3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -130,8 +130,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 947330af48601044baf05fddfb374de3, type: 3}
---- !u!4 &9160466550412170836 stripped
+--- !u!4 &3853358684648442783 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4253334677691951928, guid: 947330af48601044baf05fddfb374de3, type: 3}
-  m_PrefabInstance: {fileID: 4910720821632679276}
+  m_PrefabInstance: {fileID: 1044553726218395815}
   m_PrefabAsset: {fileID: 0}
