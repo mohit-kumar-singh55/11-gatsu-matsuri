@@ -1685,6 +1685,7 @@ Transform:
   - {fileID: 1071946748}
   - {fileID: 1242093337}
   - {fileID: 800514008}
+  - {fileID: 2098962163}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &972231642
@@ -1843,7 +1844,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1180414736781194734, guid: ee539f1ae39720f41aa09d24e51f4453, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3147384043456396875, guid: ee539f1ae39720f41aa09d24e51f4453, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2740,6 +2741,76 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2096949676}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &2098962162
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 893774850}
+    m_Modifications:
+    - target: {fileID: 1180414736781194734, guid: 5be4eb47f544bcc46817a97e57d9f60c, type: 3}
+      propertyPath: m_Name
+      value: Item - Stamina Down
+      objectReference: {fileID: 0}
+    - target: {fileID: 1180414736781194734, guid: 5be4eb47f544bcc46817a97e57d9f60c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147384043456396875, guid: 5be4eb47f544bcc46817a97e57d9f60c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147384043456396875, guid: 5be4eb47f544bcc46817a97e57d9f60c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147384043456396875, guid: 5be4eb47f544bcc46817a97e57d9f60c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147384043456396875, guid: 5be4eb47f544bcc46817a97e57d9f60c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147384043456396875, guid: 5be4eb47f544bcc46817a97e57d9f60c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147384043456396875, guid: 5be4eb47f544bcc46817a97e57d9f60c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147384043456396875, guid: 5be4eb47f544bcc46817a97e57d9f60c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147384043456396875, guid: 5be4eb47f544bcc46817a97e57d9f60c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147384043456396875, guid: 5be4eb47f544bcc46817a97e57d9f60c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147384043456396875, guid: 5be4eb47f544bcc46817a97e57d9f60c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147384043456396875, guid: 5be4eb47f544bcc46817a97e57d9f60c, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5be4eb47f544bcc46817a97e57d9f60c, type: 3}
+--- !u!4 &2098962163 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3147384043456396875, guid: 5be4eb47f544bcc46817a97e57d9f60c, type: 3}
+  m_PrefabInstance: {fileID: 2098962162}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3187082691673561212
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2880,7 +2951,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1180414736781194734, guid: 37da4eb12a98a01449e16c1e383e84e5, type: 3}
       propertyPath: m_Name
-      value: Item - Stamina Up
+      value: Item - Stamina Freeze
       objectReference: {fileID: 0}
     - target: {fileID: 3147384043456396875, guid: 37da4eb12a98a01449e16c1e383e84e5, type: 3}
       propertyPath: m_LocalPosition.x

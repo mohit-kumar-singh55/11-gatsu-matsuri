@@ -203,6 +203,15 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(RestartStaminaDepletion(delay));
     }
 
+    public void ChangeStaminaForSomeTime(float multipleOfStaminaDepletionSpeed, float duration)
+    {
+        float originalStamina = staminaInSeconds;
+
+        staminaInSeconds *= multipleOfStaminaDepletionSpeed;
+
+        StartCoroutine(ResetStamina(duration, originalStamina));
+    }
+
     public void ChangeBothSpeedForSomeTime(float multipleOfSpeed, float duration)
     {
         float originalWalkSpeed = walkSpeed;
@@ -241,5 +250,11 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         jumpForce = originalJumpForce;
+    }
+
+    private IEnumerator ResetStamina(float delay, float originalStamina)
+    {
+        yield return new WaitForSeconds(delay);
+        staminaInSeconds = originalStamina;
     }
 }

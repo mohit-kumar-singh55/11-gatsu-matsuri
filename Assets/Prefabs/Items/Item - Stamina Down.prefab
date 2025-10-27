@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3147384043456396875}
   - component: {fileID: 3812386950587438861}
-  - component: {fileID: 6195195191101160673}
+  - component: {fileID: 1077188240521132817}
   m_Layer: 0
-  m_Name: Item - Stamina Up
+  m_Name: Item - Stamina Down
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55,7 +55,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6195195191101160673
+--- !u!114 &1077188240521132817
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64,10 +64,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1180414736781194734}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8915552fd485d2d419bf080029a72368, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e52a5068a4545741b248426d6e6e265, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StaminaUp
-  staminaFreezeDuration: 10
+  m_EditorClassIdentifier: Assembly-CSharp::StaminaDown
+  multipleOfStamina: 0.7
+  staminaDecrementDuration: 10
 --- !u!1001 &538944470378919674
 PrefabInstance:
   m_ObjectHideFlags: 0
