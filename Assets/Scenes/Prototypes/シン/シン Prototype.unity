@@ -794,6 +794,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item - Speed Up
       objectReference: {fileID: 0}
+    - target: {fileID: 1180414736781194734, guid: ee539f1ae39720f41aa09d24e51f4453, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3147384043456396875, guid: ee539f1ae39720f41aa09d24e51f4453, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1612,6 +1616,7 @@ Transform:
   m_Children:
   - {fileID: 1298756736}
   - {fileID: 464293647}
+  - {fileID: 1242093337}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &972231642
@@ -1929,6 +1934,72 @@ Transform:
   m_Children: []
   m_Father: {fileID: 759639004}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1242093336
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 893774850}
+    m_Modifications:
+    - target: {fileID: 1180414736781194734, guid: 63f01d8172f5f6243aaaecb78b4e75aa, type: 3}
+      propertyPath: m_Name
+      value: Item - Time Limit Extension
+      objectReference: {fileID: 0}
+    - target: {fileID: 1180414736781194734, guid: 63f01d8172f5f6243aaaecb78b4e75aa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147384043456396875, guid: 63f01d8172f5f6243aaaecb78b4e75aa, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147384043456396875, guid: 63f01d8172f5f6243aaaecb78b4e75aa, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147384043456396875, guid: 63f01d8172f5f6243aaaecb78b4e75aa, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147384043456396875, guid: 63f01d8172f5f6243aaaecb78b4e75aa, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147384043456396875, guid: 63f01d8172f5f6243aaaecb78b4e75aa, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147384043456396875, guid: 63f01d8172f5f6243aaaecb78b4e75aa, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147384043456396875, guid: 63f01d8172f5f6243aaaecb78b4e75aa, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147384043456396875, guid: 63f01d8172f5f6243aaaecb78b4e75aa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147384043456396875, guid: 63f01d8172f5f6243aaaecb78b4e75aa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3147384043456396875, guid: 63f01d8172f5f6243aaaecb78b4e75aa, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 63f01d8172f5f6243aaaecb78b4e75aa, type: 3}
+--- !u!4 &1242093337 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3147384043456396875, guid: 63f01d8172f5f6243aaaecb78b4e75aa, type: 3}
+  m_PrefabInstance: {fileID: 1242093336}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1294576669
 GameObject:
   m_ObjectHideFlags: 0
@@ -2672,6 +2743,10 @@ PrefabInstance:
     - target: {fileID: 1180414736781194734, guid: 37da4eb12a98a01449e16c1e383e84e5, type: 3}
       propertyPath: m_Name
       value: Item - Stamina Up
+      objectReference: {fileID: 0}
+    - target: {fileID: 1180414736781194734, guid: 37da4eb12a98a01449e16c1e383e84e5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3147384043456396875, guid: 37da4eb12a98a01449e16c1e383e84e5, type: 3}
       propertyPath: m_LocalPosition.x
