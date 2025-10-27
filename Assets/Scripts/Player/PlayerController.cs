@@ -214,6 +214,16 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(ResetBothSpeed(duration, originalWalkSpeed, originalSprintSpeed));
     }
 
+    public void ChangeJumpForceForSomeTime(float multipleOfJumpForce, float duration)
+    {
+        float originalJumptPower = jumpForce;
+
+        jumpForce *= multipleOfJumpForce;
+
+        StartCoroutine(ResetJumpForce(duration, originalJumptPower));
+    }
+
+    // ** Coroutines **
     private IEnumerator RestartStaminaDepletion(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -225,5 +235,11 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(delay);
         walkSpeed = originalWalkSpeed;
         sprintSpeed = originalSprintSpeed;
+    }
+
+    private IEnumerator ResetJumpForce(float delay, float originalJumpForce)
+    {
+        yield return new WaitForSeconds(delay);
+        jumpForce = originalJumpForce;
     }
 }

@@ -11,7 +11,7 @@ public class PlayerCollisionHandler : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Interactable interactable))
+        if (other.TryGetComponent(out IInteractable interactable))
         {
             interactable.OnInteract(playerController);
         }

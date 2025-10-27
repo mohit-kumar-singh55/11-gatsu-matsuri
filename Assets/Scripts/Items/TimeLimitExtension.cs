@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TimeLimitExtension : MonoBehaviour, Interactable
+public class TimeLimitExtension : MonoBehaviour, IInteractable
 {
     [Tooltip("時間制限の延長時間 (秒)")]
     [SerializeField] private float increaseTimeLimitBy = 20f;

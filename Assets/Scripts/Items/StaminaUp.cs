@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class StaminaUp : MonoBehaviour, Interactable
+public class StaminaUp : MonoBehaviour, IInteractable
 {
     [Tooltip("スタミナの持続時間")]
     [SerializeField] private float staminaFreezeDuration = 10f;

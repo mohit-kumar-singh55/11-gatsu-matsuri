@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SpeedUp : MonoBehaviour, Interactable
+public class SpeedUp : MonoBehaviour, IInteractable
 {
     [Tooltip("速度の倍率")]
     [SerializeField] private float multipleOfSpeed = 1.3f;
