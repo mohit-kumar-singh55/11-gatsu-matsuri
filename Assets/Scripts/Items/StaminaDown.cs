@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class StaminaDown : MonoBehaviour, IInteractable
 {
-    [Tooltip("速度の倍率")]
+    [Tooltip("スタミナ減少速度の倍率")]
     [SerializeField] private float multipleOfStamina = .7f;
-    [Tooltip("速度アップの持続時間")]
+    [Tooltip("スタミナ減少速度変更の持続時間（秒）")]
     [SerializeField] private float staminaDecrementDuration = 10f;
 
     public void OnInteract(PlayerController player = null)
