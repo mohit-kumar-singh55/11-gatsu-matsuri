@@ -388,9 +388,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1276145555c72043b39fb6a326eaf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
-  processSelect: 1
+  mode: 0
   blinkInterval: 5.2
-  standInterval: 1
+  destroyAfterEntring: 2
 --- !u!65 &25176101
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2324,9 +2324,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1276145555c72043b39fb6a326eaf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
-  processSelect: 0
+  mode: 0
   blinkInterval: 5
-  standInterval: 2
+  destroyAfterEntring: 2
 --- !u!1 &174953657
 GameObject:
   m_ObjectHideFlags: 0
@@ -4962,9 +4962,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1276145555c72043b39fb6a326eaf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
-  processSelect: 1
+  mode: 0
   blinkInterval: 5.2
-  standInterval: 1
+  destroyAfterEntring: 2
 --- !u!65 &391723695
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5120,9 +5120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1276145555c72043b39fb6a326eaf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
-  processSelect: 1
+  mode: 0
   blinkInterval: 5.2
-  standInterval: 1
+  destroyAfterEntring: 2
 --- !u!65 &398476296
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7677,9 +7677,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1276145555c72043b39fb6a326eaf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
-  processSelect: 1
+  mode: 0
   blinkInterval: 5.2
-  standInterval: 2
+  destroyAfterEntring: 2
 --- !u!1 &668255099
 GameObject:
   m_ObjectHideFlags: 0
@@ -13521,9 +13521,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1276145555c72043b39fb6a326eaf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
-  processSelect: 1
+  mode: 0
   blinkInterval: 5.2
-  standInterval: 1
+  destroyAfterEntring: 2
 --- !u!65 &1122025021
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13997,9 +13997,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1276145555c72043b39fb6a326eaf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
-  processSelect: 1
+  mode: 0
   blinkInterval: 5.2
-  standInterval: 1
+  destroyAfterEntring: 2
 --- !u!65 &1143790207
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14252,9 +14252,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1276145555c72043b39fb6a326eaf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
-  processSelect: 1
+  mode: 0
   blinkInterval: 5.2
-  standInterval: 1
+  destroyAfterEntring: 2
 --- !u!65 &1165183666
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14808,9 +14808,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1276145555c72043b39fb6a326eaf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
-  processSelect: 1
+  mode: 0
   blinkInterval: 5.2
-  standInterval: 1
+  destroyAfterEntring: 2
 --- !u!65 &1198801553
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17495,9 +17495,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1276145555c72043b39fb6a326eaf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
-  processSelect: 1
+  mode: 0
   blinkInterval: 5.2
-  standInterval: 1
+  destroyAfterEntring: 2
 --- !u!65 &1375337145
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18923,9 +18923,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1276145555c72043b39fb6a326eaf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
-  processSelect: 1
+  mode: 0
   blinkInterval: 5.2
-  standInterval: 1
+  destroyAfterEntring: 2
 --- !u!65 &1470386614
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19383,9 +19383,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1276145555c72043b39fb6a326eaf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
-  processSelect: 1
+  mode: 0
   blinkInterval: 5.2
-  standInterval: 1
+  destroyAfterEntring: 2
 --- !u!65 &1514756147
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20131,9 +20131,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1276145555c72043b39fb6a326eaf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
-  processSelect: 1
+  mode: 0
   blinkInterval: 5.2
-  standInterval: 1
+  destroyAfterEntring: 2
 --- !u!65 &1599794981
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21037,9 +21037,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1276145555c72043b39fb6a326eaf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
-  processSelect: 1
+  mode: 0
   blinkInterval: 5.2
-  standInterval: 1
+  destroyAfterEntring: 2
 --- !u!65 &1749796239
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21164,9 +21164,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1276145555c72043b39fb6a326eaf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
-  processSelect: 1
+  mode: 0
   blinkInterval: 5.2
-  standInterval: 1
+  destroyAfterEntring: 2
 --- !u!65 &1752479192
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22299,9 +22299,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1276145555c72043b39fb6a326eaf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
-  processSelect: 1
+  mode: 0
   blinkInterval: 5.2
-  standInterval: 1
+  destroyAfterEntring: 2
 --- !u!65 &1849911990
 BoxCollider:
   m_ObjectHideFlags: 0
