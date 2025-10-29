@@ -1,0 +1,30 @@
+using UnityEngine;
+
+public class EnemyAttackHandCollision : MonoBehaviour
+{
+    private Collider col;
+    private EnemyAttack enemyAttack;
+    private PlayerController playerController;
+
+    void Start()
+    {
+        col = GetComponent<Collider>();
+        enemyAttack = GetComponentInParent<EnemyAttack>();
+        playerController = PlayerController.Instance;
+    }
+
+    void FixedUpdate()
+    {
+        if (enemyAttack.IsAttacking) col.enabled = true;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        // activate ragdoll
+        playerController.EnableRagdoll();
+
+        // apply force
+        Vector3 punchForce = (other.transform.position - transform.position).normalized * 500;
+        other.GetComponent<Rigidbody>().AddForceAtPosition(punchForce, other.ClosestPoint(transform.position), ForceMode.Impulse);
+    }
+}

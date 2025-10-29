@@ -1,0 +1,176 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4151088345717098835
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7077730610984169787}
+  m_Layer: 0
+  m_Name: Enemy Peeking
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7077730610984169787
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4151088345717098835}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5704341185929329825}
+  - {fileID: 7916198729177315726}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5224980729389974071
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7916198729177315726}
+  - component: {fileID: 3944546654862239762}
+  - component: {fileID: 2417117070508806621}
+  m_Layer: 0
+  m_Name: Trigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7916198729177315726
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5224980729389974071}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.66, y: 1, z: 4.26}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7077730610984169787}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3944546654862239762
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5224980729389974071}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 2, z: 3}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2417117070508806621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5224980729389974071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d747bf4aed105d746b5fcab9014d85b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PeekingEnemyTrigger
+  peekingEnemy: {fileID: 4927558913253107227}
+  animator: {fileID: 1858237054493615835}
+  peekingAnimClip: {fileID: 7400000, guid: 8d5f827ee0e91a44ebc4a9b527b49204, type: 2}
+--- !u!1001 &581593322995450211
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 7077730610984169787}
+    m_Modifications:
+    - target: {fileID: 5132933824955596226, guid: 3a850c9ad867b71488c3773592d52a5a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.134
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132933824955596226, guid: 3a850c9ad867b71488c3773592d52a5a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132933824955596226, guid: 3a850c9ad867b71488c3773592d52a5a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.095
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132933824955596226, guid: 3a850c9ad867b71488c3773592d52a5a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132933824955596226, guid: 3a850c9ad867b71488c3773592d52a5a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132933824955596226, guid: 3a850c9ad867b71488c3773592d52a5a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132933824955596226, guid: 3a850c9ad867b71488c3773592d52a5a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132933824955596226, guid: 3a850c9ad867b71488c3773592d52a5a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132933824955596226, guid: 3a850c9ad867b71488c3773592d52a5a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132933824955596226, guid: 3a850c9ad867b71488c3773592d52a5a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507911908472186744, guid: 3a850c9ad867b71488c3773592d52a5a, type: 3}
+      propertyPath: m_Name
+      value: Enemy Peeking - Whiteclown N Hallin 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3a850c9ad867b71488c3773592d52a5a, type: 3}
+--- !u!95 &1858237054493615835 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1286891270344370104, guid: 3a850c9ad867b71488c3773592d52a5a, type: 3}
+  m_PrefabInstance: {fileID: 581593322995450211}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4927558913253107227 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5507911908472186744, guid: 3a850c9ad867b71488c3773592d52a5a, type: 3}
+  m_PrefabInstance: {fileID: 581593322995450211}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5704341185929329825 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5132933824955596226, guid: 3a850c9ad867b71488c3773592d52a5a, type: 3}
+  m_PrefabInstance: {fileID: 581593322995450211}
+  m_PrefabAsset: {fileID: 0}

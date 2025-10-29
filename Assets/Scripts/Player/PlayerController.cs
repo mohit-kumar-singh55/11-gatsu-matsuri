@@ -1,8 +1,10 @@
+using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody), typeof(PlayerInput), typeof(Animator))]
+[RequireComponent(typeof(RagdollEnabler), typeof(Collider))]
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance { get; private set; }
@@ -12,6 +14,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float sprintSpeed = 5f;
     [SerializeField] float jumpForce = 400f;
     [SerializeField] float groundCheckDistance = .3f;
+    [Tooltip("スタミナが0になるまでの秒数")]
+    [SerializeField] float staminaInSeconds = 4f;
+    [Tooltip("スタミナが最大まで回復するまでの秒数")]
+    [SerializeField] float timeToRegenerateStamina = 4f;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] CinemachineCamera cm_cam;
     #endregion
@@ -19,15 +25,21 @@ public class PlayerController : MonoBehaviour
     #region Properties
     private Rigidbody rb;
     private Animator animator;
+    private RagdollEnabler ragdollEnabler;
+    private Collider col;
     private Vector2 moveInput;
     // private CameraController cameraController;
     private bool isIdle = false;
     private bool isSprinting = false;
     private bool playerFreezed = false;      // to freeze player while game over
     private float _velocity = 0f;
+    private float _curStamina;
     private int _velocityHash;
     private int _standingJumpHash;
     private int _runningJumpHash;
+    private bool _freezeStamina = false;
+
+    public bool FreezeStamina { get => _freezeStamina; set => _freezeStamina = value; }
 
     // animator variables (アニメーター変数)
     const string ANIM_SPEED = "Velocity";
@@ -49,11 +61,16 @@ public class PlayerController : MonoBehaviour
         // ** getting components **
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        ragdollEnabler = GetComponent<RagdollEnabler>();
+        col = GetComponent<Collider>();
         // cameraController = GetComponent<CameraController>();
 
         // ** hiding cursor (カーソルを隠す) **
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        // ** initializing (初期化) **
+        _curStamina = staminaInSeconds;
     }
 
     void Start()
@@ -61,6 +78,9 @@ public class PlayerController : MonoBehaviour
         _velocityHash = Animator.StringToHash(ANIM_SPEED);
         _standingJumpHash = Animator.StringToHash(ANIM_STANDING_JUMP);
         _runningJumpHash = Animator.StringToHash(ANIM_RUNNING_JUMP);
+
+        // disable ragdoll at start
+        EnableRagdoll(false);
     }
 
     void Update()
@@ -72,6 +92,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         HandleMove();
+        HandleStamina();
     }
 
     // ** Input System - Callbacks (入力システム - コールバック) **
@@ -90,8 +111,13 @@ public class PlayerController : MonoBehaviour
         isSprinting = value.Get<float>() == 1f;
     }
 
-    // ** freeze player movements (プレイヤーの動きを止める) **
-    public void FreezePlayer(bool freeze = true) => playerFreezed = freeze;
+    // ** freeze player movements and animations (プレイヤーの動きを止める) **
+    public void FreezePlayer(bool freeze = true)
+    {
+        playerFreezed = freeze;
+        rb.linearVelocity = Vector3.zero;
+        UpdateMoveAnimation();
+    }
 
     // ** handling player movements (プレイヤーの動きを制御する) **
     void HandleMove()
@@ -119,7 +145,8 @@ public class PlayerController : MonoBehaviour
         }
 
         // ** moving player (プレイヤーを移動させる) **
-        Vector3 targetVelocity = move * (isSprinting ? sprintSpeed : walkSpeed);
+        bool canSprint = isSprinting && _curStamina > 0f;
+        Vector3 targetVelocity = move * (canSprint ? sprintSpeed : walkSpeed);
         Vector3 velocityChange = targetVelocity - rb.linearVelocity;
         velocityChange.y = 0;
 
@@ -133,7 +160,7 @@ public class PlayerController : MonoBehaviour
     {
         float targetVelocity;
 
-        if (isIdle) targetVelocity = 0f;
+        if (isIdle || playerFreezed) targetVelocity = 0f;
         else targetVelocity = rb.linearVelocity.magnitude / sprintSpeed;
 
         _velocity = Mathf.Lerp(_velocity, targetVelocity, Time.deltaTime * 5f);
@@ -153,4 +180,81 @@ public class PlayerController : MonoBehaviour
     }
 
     bool IsGrounded() => Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
+
+    void HandleStamina()
+    {
+        if ((!isSprinting && _curStamina >= staminaInSeconds) || _freezeStamina) return;
+
+        if (isSprinting && moveInput != Vector2.zero) _curStamina -= Time.deltaTime;
+        else _curStamina += staminaInSeconds / timeToRegenerateStamina * Time.deltaTime;
+
+        _curStamina = Mathf.Clamp(_curStamina, 0f, staminaInSeconds);
+    }
+
+    public void EnableRagdoll(bool enable = true)
+    {
+        col.enabled = !enable;    // disable main collider when ragdoll is enabled
+        rb.isKinematic = enable;   // disable main rigidbody when ragdoll is enabled
+        ragdollEnabler.EnableRagdoll(enable);
+    }
+
+    public void RestartStaminaDepletionAfterDelay(float delay)
+    {
+        StartCoroutine(RestartStaminaDepletion(delay));
+    }
+
+    public void ChangeStaminaForSomeTime(float multipleOfStaminaDepletionSpeed, float duration)
+    {
+        float originalStamina = staminaInSeconds;
+
+        staminaInSeconds *= multipleOfStaminaDepletionSpeed;
+
+        StartCoroutine(ResetStamina(duration, originalStamina));
+    }
+
+    public void ChangeBothSpeedForSomeTime(float multipleOfSpeed, float duration)
+    {
+        float originalWalkSpeed = walkSpeed;
+        float originalSprintSpeed = sprintSpeed;
+
+        walkSpeed *= multipleOfSpeed;
+        sprintSpeed *= multipleOfSpeed;
+
+        StartCoroutine(ResetBothSpeed(duration, originalWalkSpeed, originalSprintSpeed));
+    }
+
+    public void ChangeJumpForceForSomeTime(float multipleOfJumpForce, float duration)
+    {
+        float originalJumptPower = jumpForce;
+
+        jumpForce *= multipleOfJumpForce;
+
+        StartCoroutine(ResetJumpForce(duration, originalJumptPower));
+    }
+
+    // ** Coroutines **
+    private IEnumerator RestartStaminaDepletion(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        _freezeStamina = false;
+    }
+
+    private IEnumerator ResetBothSpeed(float delay, float originalWalkSpeed, float originalSprintSpeed)
+    {
+        yield return new WaitForSeconds(delay);
+        walkSpeed = originalWalkSpeed;
+        sprintSpeed = originalSprintSpeed;
+    }
+
+    private IEnumerator ResetJumpForce(float delay, float originalJumpForce)
+    {
+        yield return new WaitForSeconds(delay);
+        jumpForce = originalJumpForce;
+    }
+
+    private IEnumerator ResetStamina(float delay, float originalStamina)
+    {
+        yield return new WaitForSeconds(delay);
+        staminaInSeconds = originalStamina;
+    }
 }
