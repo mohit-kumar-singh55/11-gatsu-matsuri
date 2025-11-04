@@ -1,15 +1,10 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 
 // Singleton Class
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-
-    [SerializeField] PlayableDirector fadeOutTimeline;
-
     // private AudioManager audioManager;
     private bool gameEnded = false;
     private bool hasKey = false;

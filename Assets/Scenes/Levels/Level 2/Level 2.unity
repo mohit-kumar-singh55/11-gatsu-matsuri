@@ -11232,6 +11232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a72c4e7a05beb24294305ebf56f3c43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  fadeOutTimeline: {fileID: 0}
 --- !u!1001 &1416177737
 PrefabInstance:
   m_ObjectHideFlags: 0
