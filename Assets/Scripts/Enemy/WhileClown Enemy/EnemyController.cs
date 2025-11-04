@@ -47,8 +47,6 @@ public class EnemyController : MonoBehaviour
     private Animator animator;
     private EnemyAttack enemyAttack;
 
-    // for standing duty npc, to go back to its original position after chasing the player (プレイヤーを追いかけた後、元の位置に戻るための待機任務NPCのために)
-    // private Vector3 startingPosition;
     // private AudioManager audioManager;
 
     // for animator
@@ -62,16 +60,6 @@ public class EnemyController : MonoBehaviour
 
     public EnemyState CurrentState => currentState;
     #endregion
-
-    // void OnEnable()
-    // {
-    //     PlayerSystem.OnPlayerDeathSequence += TriggerLose;
-    // }
-
-    // void OnDisable()
-    // {
-    //     PlayerSystem.OnPlayerDeathSequence -= TriggerLose;
-    // }
 
     void Start()
     {
@@ -165,8 +153,8 @@ public class EnemyController : MonoBehaviour
                 agent.isStopped = true;
                 enemyAttack.Attack(_isAttackingHash);
 
-                // *** trigger lose condition for player ***
-                TriggerLose();
+                // *** Stop enemy movement ***
+                StopEnemyMovement();
 
                 Debug.Log("🗡️ Attacking player");
             }
@@ -252,14 +240,17 @@ public class EnemyController : MonoBehaviour
 
     // Disables this script after triggering the lose condition.
     // 敵のlose条件を発生した後にこのスクリプトを無効化します。
-    void TriggerLose()
+    void StopEnemyMovement()
     {
         // stop all audios
         // audioManager.StopBGM();
 
+        // stop enemy movement
         agent.isStopped = true;
         animator.SetFloat(_velocityHash, 0f);
         enabled = false;
+
+        // ** trigger lose condition called in enemy attack script **
     }
 
     // for visual debugging purpose only

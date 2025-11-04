@@ -68,5 +68,11 @@ public class EnemyAttack : MonoBehaviour
         playerController.enabled = false;
 
         isAttacking = false;
+
+        // waiting for animation to end completely
+        yield return new WaitForSeconds(3f);
+
+        // ** 🔁 Step 8: Trigger game over **
+        GameManager.Instance.TriggerLose();
     }
 }

@@ -2,13 +2,12 @@ using UnityEngine;
 
 public class Key : MonoBehaviour, IInteractable
 {
-    bool hasKey = false;
-
     public void OnInteract(PlayerController player = null)
     {
         if (player == null) return;
 
-        hasKey = true;
+        GameManager.Instance.SetHasKey(true);
+        UIManager.Instance.ShowKeyUI(true);
 
         Destroy(gameObject);
     }

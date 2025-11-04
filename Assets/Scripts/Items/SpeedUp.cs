@@ -11,7 +11,12 @@ public class SpeedUp : MonoBehaviour, IInteractable
     {
         if (player == null) return;
 
-        player.ChangeBothSpeedForSomeTime(multipleOfSpeed, speedUpDuration);
+        bool isSpeedUp = multipleOfSpeed > 1f;
+
+        if (isSpeedUp) UIManager.Instance.ShowSpeedUpUI(true);
+        else UIManager.Instance.ShowSpeedDownUI(true);
+
+        player.ChangeBothSpeedForSomeTime(multipleOfSpeed, speedUpDuration, isSpeedUp);
 
         Destroy(gameObject);
     }

@@ -11,6 +11,8 @@ public class StaminaDown : MonoBehaviour, IInteractable
     {
         if (player == null) return;
 
+        UIManager.Instance.ShowStaminaDownUI(true);
+
         player.ChangeStaminaForSomeTime(multipleOfStamina, staminaDecrementDuration);
 
         Destroy(gameObject);

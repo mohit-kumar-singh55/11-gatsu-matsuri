@@ -11,6 +11,8 @@ public class StaminaUp : MonoBehaviour, IInteractable
 
         player.FreezeStamina = true;
 
+        UIManager.Instance.ShowStaminaFreezeUI(true);
+
         player.RestartStaminaDepletionAfterDelay(staminaFreezeDuration);
 
         Destroy(gameObject);
