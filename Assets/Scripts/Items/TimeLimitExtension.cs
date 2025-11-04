@@ -12,8 +12,6 @@ public class TimeLimitExtension : MonoBehaviour, IInteractable
         // TODO: chagne the time limit
         FindAnyObjectByType<CountdownTimer>().IncreaseTime(increaseTimeLimitBy);
 
-        UIManager.Instance.ShowTimeLimitExtensionUI(true);
-
         Destroy(gameObject);
     }
 }

@@ -15,7 +15,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject SpeedUpUI;
     [SerializeField] GameObject StaminaDownUI;
     [SerializeField] GameObject StaminaFreezeUI;
-    [SerializeField] GameObject TimeLimitExtensionUI;
 
     void Awake()
     {
@@ -41,7 +40,5 @@ public class UIManager : MonoBehaviour
     public void ShowStaminaDownUI(bool show) => StaminaDownUI.SetActive(show);
 
     public void ShowStaminaFreezeUI(bool show) => StaminaFreezeUI.SetActive(show);
-
-    public void ShowTimeLimitExtensionUI(bool show) => TimeLimitExtensionUI.SetActive(show);
 
 }
