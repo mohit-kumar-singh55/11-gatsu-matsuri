@@ -3,15 +3,16 @@ using TMPro;
 
 public class CountdownTimer : MonoBehaviour
 {
-    [SerializeField] private TMP_Text timerText;
     [SerializeField] private float startTime = 90f;
 
     private float currentTime;
     private bool isRunning = true;
+    private UIManager uiManager;
 
     void Start()
     {
         currentTime = startTime;
+        uiManager = UIManager.Instance;
     }
 
     void Update()
@@ -31,7 +32,7 @@ public class CountdownTimer : MonoBehaviour
         int minutes = Mathf.FloorToInt(currentTime / 60);
         int seconds = Mathf.FloorToInt(currentTime % 60);
 
-        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        uiManager.SetTimerText(minutes, seconds);
     }
 
     public void ResetTimer()
