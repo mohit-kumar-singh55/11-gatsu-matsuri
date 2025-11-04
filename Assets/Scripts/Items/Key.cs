@@ -10,6 +10,8 @@ public class Key : MonoBehaviour, IInteractable
 
         hasKey = true;
 
+        UIManager.Instance.ShowKeyUI(true);
+
         Destroy(gameObject);
     }
 }

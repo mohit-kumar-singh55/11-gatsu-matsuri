@@ -1,5 +1,4 @@
 using UnityEngine;
-using TMPro;
 
 public class CountdownTimer : MonoBehaviour
 {
@@ -34,6 +33,8 @@ public class CountdownTimer : MonoBehaviour
 
         uiManager.SetTimerText(minutes, seconds);
     }
+
+    public void IncreaseTime(float amount) => currentTime += amount;
 
     public void ResetTimer()
     {

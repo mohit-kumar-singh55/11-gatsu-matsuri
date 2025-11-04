@@ -11,6 +11,8 @@ public class JumpPowerUp : MonoBehaviour, IInteractable
     {
         if (player == null) return;
 
+        UIManager.Instance.ShowJumpPowerUI(true);
+
         player.ChangeJumpForceForSomeTime(multipleOfJumpForce, jumpForceUpDuration);
 
         Destroy(gameObject);

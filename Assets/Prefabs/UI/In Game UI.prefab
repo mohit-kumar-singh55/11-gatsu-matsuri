@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2073764824407502978}
   - component: {fileID: 412128293347873661}
   m_Layer: 0
-  m_Name: Item
+  m_Name: StaminaDownIMG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -553,7 +553,7 @@ GameObject:
   - component: {fileID: 7722321717382187715}
   - component: {fileID: 6219601141241839046}
   m_Layer: 0
-  m_Name: Item
+  m_Name: SpeedUpIMG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -777,7 +777,7 @@ GameObject:
   - component: {fileID: 1066698442191595579}
   - component: {fileID: 4318392863745904009}
   m_Layer: 0
-  m_Name: Item
+  m_Name: SpeedDownIMG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1030,7 +1030,7 @@ GameObject:
   - component: {fileID: 4197766224219821552}
   - component: {fileID: 6016018202547742831}
   m_Layer: 0
-  m_Name: Item
+  m_Name: Time Limit ExtensionIMG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1441,7 +1441,7 @@ GameObject:
   - component: {fileID: 7224584589298875413}
   - component: {fileID: 3737387168325225821}
   m_Layer: 0
-  m_Name: Item
+  m_Name: StaminaFreezeIMG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1628,7 +1628,7 @@ GameObject:
   - component: {fileID: 7733510716070284473}
   - component: {fileID: 4908891290179607570}
   m_Layer: 0
-  m_Name: Item
+  m_Name: JumpIMG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

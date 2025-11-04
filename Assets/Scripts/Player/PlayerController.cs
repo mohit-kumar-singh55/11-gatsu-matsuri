@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     private RagdollEnabler ragdollEnabler;
     private Collider col;
     private Vector2 moveInput;
+    private UIManager uiManager;
     // private CameraController cameraController;
     private bool isIdle = false;
     private bool isSprinting = false;
@@ -78,6 +79,8 @@ public class PlayerController : MonoBehaviour
         _velocityHash = Animator.StringToHash(ANIM_SPEED);
         _standingJumpHash = Animator.StringToHash(ANIM_STANDING_JUMP);
         _runningJumpHash = Animator.StringToHash(ANIM_RUNNING_JUMP);
+
+        uiManager = UIManager.Instance;
 
         // disable ragdoll at start
         EnableRagdoll(false);
@@ -212,7 +215,7 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(ResetStamina(duration, originalStamina));
     }
 
-    public void ChangeBothSpeedForSomeTime(float multipleOfSpeed, float duration)
+    public void ChangeBothSpeedForSomeTime(float multipleOfSpeed, float duration, bool isSpeedUp)
     {
         float originalWalkSpeed = walkSpeed;
         float originalSprintSpeed = sprintSpeed;
@@ -220,7 +223,7 @@ public class PlayerController : MonoBehaviour
         walkSpeed *= multipleOfSpeed;
         sprintSpeed *= multipleOfSpeed;
 
-        StartCoroutine(ResetBothSpeed(duration, originalWalkSpeed, originalSprintSpeed));
+        StartCoroutine(ResetBothSpeed(duration, originalWalkSpeed, originalSprintSpeed, isSpeedUp));
     }
 
     public void ChangeJumpForceForSomeTime(float multipleOfJumpForce, float duration)
@@ -237,24 +240,33 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         _freezeStamina = false;
+
+        uiManager.ShowStaminaFreezeUI(false);
     }
 
-    private IEnumerator ResetBothSpeed(float delay, float originalWalkSpeed, float originalSprintSpeed)
+    private IEnumerator ResetBothSpeed(float delay, float originalWalkSpeed, float originalSprintSpeed, bool isSpeedUp)
     {
         yield return new WaitForSeconds(delay);
         walkSpeed = originalWalkSpeed;
         sprintSpeed = originalSprintSpeed;
+
+        if (isSpeedUp) uiManager.ShowSpeedUpUI(false);
+        else uiManager.ShowSpeedDownUI(false);
     }
 
     private IEnumerator ResetJumpForce(float delay, float originalJumpForce)
     {
         yield return new WaitForSeconds(delay);
         jumpForce = originalJumpForce;
+
+        uiManager.ShowJumpPowerUI(false);
     }
 
     private IEnumerator ResetStamina(float delay, float originalStamina)
     {
         yield return new WaitForSeconds(delay);
         staminaInSeconds = originalStamina;
+
+        uiManager.ShowStaminaDownUI(false);
     }
 }

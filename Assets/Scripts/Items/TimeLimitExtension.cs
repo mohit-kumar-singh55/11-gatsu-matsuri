@@ -10,9 +10,10 @@ public class TimeLimitExtension : MonoBehaviour, IInteractable
         if (player == null) return;
 
         // TODO: chagne the time limit
+        FindAnyObjectByType<CountdownTimer>().IncreaseTime(increaseTimeLimitBy);
 
-        // player.ChangeBothSpeedForSomeTime(multipleOfSpeed, speedUpDuration);
+        UIManager.Instance.ShowTimeLimitExtensionUI(true);
 
-        // Destroy(gameObject);
+        Destroy(gameObject);
     }
 }
