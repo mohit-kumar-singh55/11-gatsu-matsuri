@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 
 // Singleton Class
@@ -6,12 +8,13 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    // private UIManager uiManager;
+    [SerializeField] PlayableDirector fadeOutTimeline;
+
     // private AudioManager audioManager;
     private bool gameEnded = false;
-    private bool menuActive = false;
+    private bool hasKey = false;
 
-    private KeyCode cheatKeyNextLevel = KeyCode.L;
+    private readonly KeyCode cheatKeyNextLevel = KeyCode.L;
 
     private void Awake()
     {
@@ -27,46 +30,37 @@ public class GameManager : MonoBehaviour
         ShowCursor(false);
     }
 
-    void Start()
-    {
-        // uiManager = UIManager.Instance;
-    }
-
     void Update()
     {
         // cheat to go to next level
         if (Input.GetKeyDown(cheatKeyNextLevel)) GoToNextLevel();
     }
 
-    public void ResumeGame() => SetShowMenu();
+    public void SetHasKey(bool value) => hasKey = value;
 
-    public void SetShowMenu()
-    {
-        menuActive = !menuActive;
-        // uiManager.ShowMenuUI(menuActive);
-        Time.timeScale = menuActive ? 0 : 1;
-        ShowCursor(menuActive);
-    }
-
+    // only when timer runs out
     public void TriggerLose()
     {
         if (gameEnded) return;
 
         gameEnded = true;
 
+        // saving current level index for reloading
+        PlayerPrefs.SetInt(PLAYERPREFKEYS.LEVEL_TO_RESTART, SceneManager.GetActiveScene().buildIndex);
         GameOverSequence();
-        // uiManager.ShowLoseUI(true);
+        SceneLoader.LoadScene(SCENES.GAME_OVER);
     }
 
     public void TriggerWin()
     {
+        if (!hasKey) return;
+
         if (gameEnded) return;
 
         gameEnded = true;
 
         GameOverSequence();
-        // uiManager.ShowWinUI(true);
-        // uiManager.ShowNextLevelButton(true);
+        SceneLoader.LoadScene(SCENES.GAME_CLEAR);
     }
 
     public void GameOverSequence()
@@ -74,9 +68,6 @@ public class GameManager : MonoBehaviour
         ShowCursor(true);
         // Timer.Instance.StopTimer(true);
         // AudioManager.Instance.StopAllAudios(true);
-        // uiManager.ShowGameOverPanelUI(true);
-        // Time.timeScale = 0.05f;
-        // Time.fixedDeltaTime = 0.02f * Time.timeScale;
     }
 
     void ShowCursor(bool show = true)
@@ -85,23 +76,19 @@ public class GameManager : MonoBehaviour
         Cursor.visible = show;
     }
 
-    public void ReloadGame()
+    public void ReloadCurrentLevelWhenFall()
     {
         Instance = null;
-        // Time.timeScale = 1f;
-        // Time.fixedDeltaTime = 0.02f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+        SceneLoader.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void GoToNextLevel()
     {
         Instance = null;
-        // Time.timeScale = 1f;
-        // Time.fixedDeltaTime = 0.02f;
 
         // 0 -> main menu, 1, 2, 3 -> levels..., 4 -> game over, 5 -> game clear
         int nextLevelInd = (SceneManager.GetActiveScene().buildIndex + 1) % SceneManager.sceneCountInBuildSettings;
-        nextLevelInd = nextLevelInd <= 1 ? 2 : nextLevelInd;
+        nextLevelInd = nextLevelInd <= 0 ? 1 : nextLevelInd;
         SceneManager.LoadScene(nextLevelInd);
     }
 

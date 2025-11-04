@@ -25,7 +25,8 @@ public class CountdownTimer : MonoBehaviour
             currentTime = 0;
             isRunning = false;
 
-            // SceneManager.LoadScene("GameOver");
+            GameManager.Instance.TriggerLose();
+            return;
         }
 
         int minutes = Mathf.FloorToInt(currentTime / 60);
