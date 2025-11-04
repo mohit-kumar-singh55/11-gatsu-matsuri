@@ -1,16 +1,10 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 public class CountdownTimer : MonoBehaviour
 {
-    // 時間表示用のText
-    [SerializeField]
-    private TMP_Text timerText;
-    // タイマー開始秒数
-    [SerializeField] 
-    private float startTime = 90f;
-   
+    [SerializeField] private TMP_Text timerText;
+    [SerializeField] private float startTime = 90f;
 
     private float currentTime;
     private bool isRunning = true;
@@ -31,8 +25,7 @@ public class CountdownTimer : MonoBehaviour
             currentTime = 0;
             isRunning = false;
 
-            // タイムアップでシーン切り替え
-            SceneManager.LoadScene("GameOver");
+            // SceneManager.LoadScene("GameOver");
         }
 
         int minutes = Mathf.FloorToInt(currentTime / 60);
@@ -41,7 +34,6 @@ public class CountdownTimer : MonoBehaviour
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    // 外部から再スタートできるように
     public void ResetTimer()
     {
         currentTime = startTime;

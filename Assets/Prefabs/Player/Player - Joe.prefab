@@ -958,7 +958,7 @@ MonoBehaviour:
   timeToRegenerateStamina: 4
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 520
   cm_cam: {fileID: 0}
 --- !u!114 &7287443848470175830
 MonoBehaviour:
