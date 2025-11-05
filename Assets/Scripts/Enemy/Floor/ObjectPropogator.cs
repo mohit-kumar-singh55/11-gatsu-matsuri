@@ -43,6 +43,7 @@ public class ObjectPropogator : MonoBehaviour
         // ** stuff to make player move with platform and not slide off **
         // Calculate velocity
         platformVelocity = (transform.position - lastPos) / Time.deltaTime;
+        platformVelocity.y = 0; // Ignore vertical velocity
         lastPos = transform.position;
     }
 }
