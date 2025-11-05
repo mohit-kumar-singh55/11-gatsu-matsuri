@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     private Collider col;
     private Vector2 moveInput;
     private UIManager uiManager;
+    private ObjectPropogator currentPlatform;    // ** stuff to make player move with platform and not slide off **
     // private CameraController cameraController;
     private bool isIdle = false;
     private bool isSprinting = false;
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
     private int _runningJumpHash;
     private bool _freezeStamina = false;
 
+    public ObjectPropogator CurrentPlatform { set => currentPlatform = value; }   // ** stuff to make player move with platform and not slide off **
     public bool FreezeStamina { get => _freezeStamina; set => _freezeStamina = value; }
 
     // animator variables (アニメーター変数)
@@ -89,12 +91,16 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (rb.linearVelocity == Vector3.zero || rb.linearVelocity.magnitude < .05f) isIdle = true;
+        else if (currentPlatform != null && moveInput == Vector2.zero) isIdle = true;   // to stop animation while on moving platform and not moving
         else isIdle = false;
     }
 
     void FixedUpdate()
     {
         HandleMove();
+        // ** stuff to make player move with platform and not slide off **
+        if (currentPlatform != null) rb.linearVelocity += currentPlatform.PlatformVelocity;
+
         HandleStamina();
     }
 

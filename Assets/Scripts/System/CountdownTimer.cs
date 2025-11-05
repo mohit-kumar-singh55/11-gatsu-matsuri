@@ -2,15 +2,30 @@ using UnityEngine;
 
 public class CountdownTimer : MonoBehaviour
 {
+    public static CountdownTimer Instance { get; private set; }
+
     [SerializeField] private float startTime = 90f;
 
     private float currentTime;
     private bool isRunning = true;
     private UIManager uiManager;
 
+    public float CurrentTime => currentTime;
+
+    void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
+
     void Start()
     {
-        currentTime = startTime;
+        CheckIfReset();
         uiManager = UIManager.Instance;
     }
 
@@ -37,9 +52,11 @@ public class CountdownTimer : MonoBehaviour
 
     public void IncreaseTime(float amount) => currentTime += amount;
 
-    public void ResetTimer()
+    public void CheckIfReset()
     {
-        currentTime = startTime;
-        isRunning = true;
+        if (PlayerPrefs.GetInt(PLAYERPREFKEYS.RESET_TIMER, 1) == 1) currentTime = startTime;
+        else currentTime = PlayerPrefs.GetFloat(PLAYERPREFKEYS.TIMER_TO_START_FROM, startTime);
     }
 }
+
+// Vector3(-0.5,1.22000003,-35)

@@ -42,10 +42,12 @@ public class GameManager : MonoBehaviour
 
         // saving current level index for reloading
         PlayerPrefs.SetInt(PLAYERPREFKEYS.LEVEL_TO_RESTART, SceneManager.GetActiveScene().buildIndex);
+        PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 1);
         GameOverSequence();
         SceneLoader.LoadScene(SCENES.GAME_OVER);
     }
 
+    // only when reaching the goal with the key
     public void TriggerWin()
     {
         if (!hasKey) return;
@@ -54,6 +56,7 @@ public class GameManager : MonoBehaviour
 
         gameEnded = true;
 
+        PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 1);
         GameOverSequence();
         SceneLoader.LoadScene(SCENES.GAME_CLEAR);
     }
@@ -74,6 +77,10 @@ public class GameManager : MonoBehaviour
     public void ReloadCurrentLevelWhenFall()
     {
         Instance = null;
+
+        // not to reset the timer when restarting level by falling
+        PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 0);
+        PlayerPrefs.SetFloat(PLAYERPREFKEYS.TIMER_TO_START_FROM, CountdownTimer.Instance.CurrentTime);
         SceneLoader.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

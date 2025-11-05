@@ -16,4 +16,17 @@ public class PlayerCollisionHandler : MonoBehaviour
             interactable.OnInteract(playerController);
         }
     }
+
+    // ** stuff to make player move with platform and not slide off **
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.TryGetComponent(out ObjectPropogator platform))
+            playerController.CurrentPlatform = platform;
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.TryGetComponent(out ObjectPropogator platform))
+            playerController.CurrentPlatform = null;
+    }
 }

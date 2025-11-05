@@ -17,9 +17,16 @@ public class ObjectPropogator : MonoBehaviour
     private Vector3 direction;
     private float timer = 0f;
 
+    // ** stuff to make player move with platform and not slide off **
+    private Vector3 lastPos;
+    private Vector3 platformVelocity;
+
+    public Vector3 PlatformVelocity => platformVelocity;
+
     void Start()
     {
         startPos = transform.position;
+        lastPos = startPos;
         timer = startAfterSeconds;
 
         direction = axis == ObjectPropogatorAxis.X ? Vector3.right : axis == ObjectPropogatorAxis.Y ? Vector3.up : Vector3.forward;
@@ -32,5 +39,10 @@ public class ObjectPropogator : MonoBehaviour
         float offset = Mathf.Sin(timer) * distance;
 
         transform.position = startPos + direction * offset;
+
+        // ** stuff to make player move with platform and not slide off **
+        // Calculate velocity
+        platformVelocity = (transform.position - lastPos) / Time.deltaTime;
+        lastPos = transform.position;
     }
 }
