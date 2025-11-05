@@ -14,6 +14,7 @@ public class MainMenuController : MonoBehaviour
 
     public void LoadNewGame()
     {
+        PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 1);
         FadeOutScreen();
     }
 
