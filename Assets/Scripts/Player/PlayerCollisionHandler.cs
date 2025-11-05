@@ -14,6 +14,7 @@ public class PlayerCollisionHandler : MonoBehaviour
         if (other.TryGetComponent(out IInteractable interactable))
         {
             interactable.OnInteract(playerController);
+            SFXManager.Instance.PlayItemPickup();
         }
     }
 
