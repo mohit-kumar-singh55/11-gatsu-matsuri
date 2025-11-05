@@ -58,5 +58,3 @@ public class CountdownTimer : MonoBehaviour
         else currentTime = PlayerPrefs.GetFloat(PLAYERPREFKEYS.TIMER_TO_START_FROM, startTime);
     }
 }
-
-// Vector3(-0.5,1.22000003,-35)

@@ -72,7 +72,7 @@ public class EnemyAttack : MonoBehaviour
         // waiting for animation to end completely
         yield return new WaitForSeconds(3f);
 
-        // ** 🔁 Step 8: Trigger game over **
-        GameManager.Instance.TriggerLose();
+        // ** 🔁 Step 8: Trigger restart level **
+        GameManager.Instance.ReloadCurrentLevelWhenFall();
     }
 }
