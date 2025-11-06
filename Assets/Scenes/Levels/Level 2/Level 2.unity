@@ -4629,9 +4629,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1276145555c72043b39fb6a326eaf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
-  mode: 0
+  mode: 1
   blinkInterval: 5.2
-  destroyAfterEntring: 2
+  destroyAfterEntring: 7
   disappearChildMesh: 0
 --- !u!65 &391723695
 BoxCollider:
