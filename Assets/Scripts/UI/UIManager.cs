@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject SpeedUpUI;
     [SerializeField] GameObject StaminaDownUI;
     [SerializeField] GameObject StaminaFreezeUI;
+
+    [Header("Stamina UI")]
+    [SerializeField] Image staminaImage;
+    [SerializeField] Sprite[] staminaFrames;
 
     void Awake()
     {
@@ -41,4 +46,9 @@ public class UIManager : MonoBehaviour
 
     public void ShowStaminaFreezeUI(bool show) => StaminaFreezeUI.SetActive(show);
 
+    public void SetStaminaImage(float currentStamina, float maxStamina)
+    {
+        int index = Mathf.Clamp(Mathf.FloorToInt(currentStamina / maxStamina * (staminaFrames.Length - 1)), 0, staminaFrames.Length - 1);
+        staminaImage.sprite = staminaFrames[staminaFrames.Length - 1 - index];
+    }
 }

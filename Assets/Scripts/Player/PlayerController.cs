@@ -198,6 +198,9 @@ public class PlayerController : MonoBehaviour
         else _curStamina += staminaInSeconds / timeToRegenerateStamina * Time.deltaTime;
 
         _curStamina = Mathf.Clamp(_curStamina, 0f, staminaInSeconds);
+
+        // update stamina UI
+        uiManager.SetStaminaImage(_curStamina, staminaInSeconds);
     }
 
     public void EnableRagdoll(bool enable = true)
