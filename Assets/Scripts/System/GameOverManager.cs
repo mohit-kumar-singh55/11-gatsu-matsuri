@@ -2,9 +2,15 @@ using UnityEngine;
 
 public class GameOverManager : MonoBehaviour
 {
+    private SFXManager sfxManager;
+
+    void Start()
+    {
+        sfxManager = SFXManager.Instance;
+    }
     public void GoToMainMenu()
     {
-        SFXManager.Instance.PlayButtonClick();
+        if (sfxManager) sfxManager.PlayButtonClick();
         SceneLoader.LoadScene(SCENES.MAIN_MENU);
     }
 
@@ -12,14 +18,14 @@ public class GameOverManager : MonoBehaviour
     public void RestartGame()
     {
         PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 1);
-        SFXManager.Instance.PlayButtonClick();
+        if (sfxManager) sfxManager.PlayButtonClick();
         SceneLoader.LoadScene(SCENES.LEVEL_1);
     }
 
     public void RestartLevel()
     {
         PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 1);
-        SFXManager.Instance.PlayButtonClick();
+        if (sfxManager) sfxManager.PlayButtonClick();
         SceneLoader.LoadScene(PlayerPrefs.GetInt(PLAYERPREFKEYS.LEVEL_TO_RESTART, SCENES.MAIN_MENU));
     }
 }

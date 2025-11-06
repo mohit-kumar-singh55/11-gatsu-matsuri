@@ -11,7 +11,7 @@ public class LevelFinishDetector : MonoBehaviour
             if (isLastLevel) GameManager.Instance.TriggerWin();
             else GameManager.Instance.GoToNextLevel();
 
-            SFXManager.Instance.PlayDoorOpen();
+            if (SFXManager.Instance) SFXManager.Instance.PlayDoorOpen();
         }
     }
 }

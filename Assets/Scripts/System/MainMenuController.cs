@@ -16,7 +16,7 @@ public class MainMenuController : MonoBehaviour
     {
         PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 1);
         FadeOutScreen();
-        SFXManager.Instance.PlayButtonClick();
+        if (SFXManager.Instance) SFXManager.Instance.PlayButtonClick();
     }
 
     public void Quit() => Application.Quit();
