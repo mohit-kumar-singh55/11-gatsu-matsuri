@@ -10,6 +10,8 @@ public class BGMManager : MonoBehaviour
     [SerializeField] AudioClip mainMenuBGM; // Menu–Level2
     [Tooltip("Level3 BGM")]
     [SerializeField] AudioClip level3BGM; // Level3
+    [Tooltip("Game Over BGM")]
+    [SerializeField] AudioClip gameOverBGM; // game over
 
     void Awake()
     {
@@ -37,15 +39,16 @@ public class BGMManager : MonoBehaviour
 
         if (sceneIndex <= SCENES.LEVEL_2) PlayBGM(mainMenuBGM);
         else if (sceneIndex == SCENES.LEVEL_3) PlayBGM(level3BGM);
+        else if (sceneIndex == SCENES.GAME_OVER) PlayBGM(gameOverBGM, false);
     }
 
-    void PlayBGM(AudioClip clip)
+    void PlayBGM(AudioClip clip, bool loop = true)
     {
         if (bgmSource.clip == clip && bgmSource.isPlaying)
             return; // Already playing correct BGM
 
         bgmSource.clip = clip;
-        bgmSource.loop = true;
+        bgmSource.loop = loop;
         bgmSource.Play();
     }
 }

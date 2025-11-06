@@ -472,6 +472,7 @@ MonoBehaviour:
   bgmSource: {fileID: 781700720}
   mainMenuBGM: {fileID: 8300000, guid: e07b00d1f49bb564cbc4bc8534a8ed5d, type: 3}
   level3BGM: {fileID: 8300000, guid: 268d148b1ae4bbf41a3a09f9eee7ac96, type: 3}
+  gameOverBGM: {fileID: 8300000, guid: b6a1dea0da2c4654fbba8e62144bb91b, type: 3}
 --- !u!82 &781700720
 AudioSource:
   m_ObjectHideFlags: 0
@@ -487,7 +488,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
