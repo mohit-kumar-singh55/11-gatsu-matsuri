@@ -88,6 +88,8 @@ public class GameManager : MonoBehaviour
     {
         Instance = null;
 
+        PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 1);
+
         // 0 -> main menu, 1, 2, 3 -> levels..., 4 -> game over, 5 -> game clear
         int nextLevelInd = (SceneManager.GetActiveScene().buildIndex + 1) % SceneManager.sceneCountInBuildSettings;
         nextLevelInd = nextLevelInd <= 0 ? 1 : nextLevelInd;
