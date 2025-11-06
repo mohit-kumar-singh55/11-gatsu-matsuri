@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float timeToRegenerateStamina = 4f;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] CinemachineCamera cm_cam;
+    [SerializeField] GameObject topDownLight;
     #endregion
 
     #region Properties
@@ -208,6 +209,8 @@ public class PlayerController : MonoBehaviour
         col.enabled = !enable;    // disable main collider when ragdoll is enabled
         rb.isKinematic = enable;   // disable main rigidbody when ragdoll is enabled
         ragdollEnabler.EnableRagdoll(enable);
+
+        if (topDownLight) topDownLight.SetActive(!enable);
     }
 
     public void RestartStaminaDepletionAfterDelay(float delay)
