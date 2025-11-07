@@ -5,10 +5,16 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    // private AudioManager audioManager;
+
+    private UIManager uiManager;
     private bool gameEnded = false;
+    private bool pauseMenuActive = false;
     private bool hasKey = false;
 
+    // menu keys
+    private readonly KeyCode pauseMenuKey = KeyCode.Escape;
+
+    // cheat keys
     private readonly KeyCode cheatKeyNextLevel = KeyCode.L;
 
     private void Awake()
@@ -25,10 +31,30 @@ public class GameManager : MonoBehaviour
         ShowCursor(false);
     }
 
+    void Start()
+    {
+        uiManager = UIManager.Instance;
+    }
+
     void Update()
     {
+        if (gameEnded) return;
+
         // cheat to go to next level
         if (Input.GetKeyDown(cheatKeyNextLevel)) GoToNextLevel();
+        // pause menu toggle
+        else if (Input.GetKeyDown(pauseMenuKey)) SetShowMenu();
+    }
+
+    public void ResumeGame() => SetShowMenu();
+
+    public void SetShowMenu()
+    {
+        Debug.Log("Toggling Pause Menu");
+        pauseMenuActive = !pauseMenuActive;
+        uiManager.ShowPauseMenu(pauseMenuActive);
+        Time.timeScale = pauseMenuActive ? 0 : 1;
+        ShowCursor(pauseMenuActive);
     }
 
     public void SetHasKey(bool value) => hasKey = value;
@@ -94,6 +120,14 @@ public class GameManager : MonoBehaviour
         int nextLevelInd = (SceneManager.GetActiveScene().buildIndex + 1) % SceneManager.sceneCountInBuildSettings;
         nextLevelInd = nextLevelInd <= 0 ? 1 : nextLevelInd;
         SceneManager.LoadScene(nextLevelInd);
+    }
+
+    public void GoToMainMenu()
+    {
+        Instance = null;
+        Time.timeScale = 1f;
+        if (SFXManager.Instance) SFXManager.Instance.PlayButtonClick();
+        SceneLoader.LoadScene(SCENES.MAIN_MENU);
     }
 
     public void QuitGame() => Application.Quit();

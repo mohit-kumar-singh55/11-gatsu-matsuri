@@ -9,6 +9,9 @@ public class UIManager : MonoBehaviour
     [Header("InGame UI")]
     [SerializeField] TMP_Text timerText;
 
+    [Header("Pause Menu UI")]
+    [SerializeField] GameObject pauseMenuUI;
+
     [Header("Items UI")]
     [SerializeField] GameObject KeyUI;
     [SerializeField] GameObject JumpPowerUI;
@@ -33,6 +36,8 @@ public class UIManager : MonoBehaviour
     }
 
     public void SetTimerText(float min, float sec) => timerText.text = string.Format("{0:00}:{1:00}", min, sec);
+
+    public void ShowPauseMenu(bool show) => pauseMenuUI.SetActive(show);
 
     public void ShowKeyUI(bool show) => KeyUI.SetActive(show);
 

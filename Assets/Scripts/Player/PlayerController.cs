@@ -10,14 +10,21 @@ public class PlayerController : MonoBehaviour
     public static PlayerController Instance { get; private set; }
 
     #region Input Fields
+    [Header("Movement Settings")]
     [SerializeField] float walkSpeed = 2f;
     [SerializeField] float sprintSpeed = 5f;
     [SerializeField] float jumpForce = 400f;
     [SerializeField] float groundCheckDistance = .3f;
+
+    [Header("Stamina Settings")]
+    [Tooltip("スタミナを使用するかどうか")]
+    [SerializeField] bool useStamina = false;
     [Tooltip("スタミナが0になるまでの秒数")]
     [SerializeField] float staminaInSeconds = 4f;
     [Tooltip("スタミナが最大まで回復するまでの秒数")]
     [SerializeField] float timeToRegenerateStamina = 4f;
+
+    [Header("References")]
     [SerializeField] LayerMask groundLayer;
     [SerializeField] CinemachineCamera cm_cam;
     [SerializeField] GameObject topDownLight;
@@ -99,10 +106,10 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         HandleMove();
-        // ** stuff to make player move with platform and not slide off **
+        // ** stuff to make player move with moving platform and not slide off **
         if (currentPlatform != null) rb.linearVelocity += currentPlatform.PlatformVelocity;
 
-        HandleStamina();
+        if (useStamina) HandleStamina();
     }
 
     // ** Input System - Callbacks (入力システム - コールバック) **

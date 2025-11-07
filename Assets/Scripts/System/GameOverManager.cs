@@ -8,6 +8,7 @@ public class GameOverManager : MonoBehaviour
     {
         sfxManager = SFXManager.Instance;
     }
+
     public void GoToMainMenu()
     {
         if (sfxManager) sfxManager.PlayButtonClick();

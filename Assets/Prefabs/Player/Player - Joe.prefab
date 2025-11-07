@@ -669,6 +669,9 @@ PrefabInstance:
       addedObject: {fileID: 4498793458103114534}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e3574f09562b81d48afa21e68885ab6e, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 2645073744314797391}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e3574f09562b81d48afa21e68885ab6e, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 2134045801226424544}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e3574f09562b81d48afa21e68885ab6e, type: 3}
       insertIndex: -1
@@ -1164,8 +1167,31 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.27920285
+  m_Radius: 0.26
   m_Height: 1.788245
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.8820592, z: 0.020797163}
+--- !u!136 &2645073744314797391
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2425077457695949154}
+  m_Material: {fileID: 13400000, guid: 584661deef7bfba4a9c4219e7b21e44b, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.27920285
+  m_Height: 1.77
   m_Direction: 1
   m_Center: {x: 0, y: 0.8820592, z: 0.020797163}
 --- !u!54 &2134045801226424544
@@ -1211,6 +1237,7 @@ MonoBehaviour:
   sprintSpeed: 5
   jumpForce: 400
   groundCheckDistance: 0.3
+  useStamina: 0
   staminaInSeconds: 4
   timeToRegenerateStamina: 4
   groundLayer:
