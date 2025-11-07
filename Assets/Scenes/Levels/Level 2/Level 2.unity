@@ -213,7 +213,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4, y: 0.3, z: 0.6}
+  m_Size: {x: 0.4, y: 0.4, z: 0.6}
   m_Center: {x: -0.1, y: 0.17, z: -0.04}
 --- !u!1001 &7881197
 PrefabInstance:
@@ -720,7 +720,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2, y: 1, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &49598499
 GameObject:
@@ -1007,7 +1007,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1.43}
+  m_Size: {x: 2, y: 1, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &94494105
 GameObject:
@@ -3822,7 +3822,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4, y: 0.3, z: 0.6}
+  m_Size: {x: 0.4, y: 0.4, z: 0.6}
   m_Center: {x: -0.1, y: 0.17, z: -0.04}
 --- !u!1 &304277315
 GameObject:
@@ -4140,7 +4140,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4, y: 0.3, z: 0.6}
+  m_Size: {x: 0.4, y: 0.4, z: 0.6}
   m_Center: {x: 0, y: 0.17, z: -0.04}
 --- !u!1 &321448977
 GameObject:
@@ -5143,7 +5143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
   mode: 0
-  blinkInterval: 5.2
+  blinkInterval: 7
   destroyAfterEntring: 2
   disappearChildMesh: 1
 --- !u!23 &362118841
@@ -5242,7 +5242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
   mode: 1
-  blinkInterval: 5.2
+  blinkInterval: 7
   destroyAfterEntring: 7
   disappearChildMesh: 0
 --- !u!65 &391723695
@@ -7115,7 +7115,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4, y: 0.3, z: 0.6}
+  m_Size: {x: 0.4, y: 0.4, z: 0.6}
   m_Center: {x: 0, y: 0.17, z: -0.04}
 --- !u!1 &527713486
 GameObject:
@@ -8814,7 +8814,7 @@ Transform:
   m_GameObject: {fileID: 694644865}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 30.72, y: 0, z: 23.34}
+  m_LocalPosition: {x: 30.72, y: 0, z: 20.03}
   m_LocalScale: {x: 21.12, y: 4, z: 14.2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8880,7 +8880,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 1, z: 1.41}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &705173716
 GameObject:
@@ -10253,7 +10253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
   mode: 0
-  blinkInterval: 5.2
+  blinkInterval: 7
   destroyAfterEntring: 2
   disappearChildMesh: 1
 --- !u!23 &818814628
@@ -12258,7 +12258,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2, y: 1, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &985484803
 PrefabInstance:
@@ -13540,7 +13540,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2, y: 1, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1100608555
 GameObject:
@@ -13747,7 +13747,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4, y: 0.3, z: 0.6}
+  m_Size: {x: 0.4, y: 0.4, z: 0.6}
   m_Center: {x: 0, y: 0.17, z: -0.04}
 --- !u!1001 &1124226658
 PrefabInstance:
@@ -13962,7 +13962,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4, y: 0.3, z: 0.6}
+  m_Size: {x: 0.4, y: 0.4, z: 0.6}
   m_Center: {x: -0.1, y: 0.17, z: -0.04}
 --- !u!1 &1127197481
 GameObject:
@@ -14866,7 +14866,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2, y: 1, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1188242263
 GameObject:
@@ -15311,7 +15311,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4, y: 0.3, z: 0.6}
+  m_Size: {x: 0.4, y: 0.4, z: 0.6}
   m_Center: {x: -0.1, y: 0.17, z: -0.04}
 --- !u!1 &1213227755
 GameObject:
@@ -16490,7 +16490,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4, y: 0.3, z: 0.6}
+  m_Size: {x: 0.4, y: 0.4, z: 0.6}
   m_Center: {x: -0.1, y: 0.17, z: -0.04}
 --- !u!1001 &1283056816
 PrefabInstance:
@@ -19779,7 +19779,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorBlink
   mode: 0
-  blinkInterval: 5.2
+  blinkInterval: 7
   destroyAfterEntring: 2
   disappearChildMesh: 1
 --- !u!23 &1491822283
@@ -20595,7 +20595,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4, y: 0.3, z: 0.6}
+  m_Size: {x: 0.4, y: 0.4, z: 0.6}
   m_Center: {x: 0, y: 0.17, z: -0.04}
 --- !u!1 &1577482329 stripped
 GameObject:
@@ -23395,7 +23395,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2, y: 1, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1853206976
 GameObject:
@@ -25983,7 +25983,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4, y: 0.3, z: 0.6}
+  m_Size: {x: 0.4, y: 0.4, z: 0.6}
   m_Center: {x: 0, y: 0.17, z: -0.04}
 --- !u!1 &2002039728
 GameObject:
@@ -26251,7 +26251,7 @@ Transform:
   m_GameObject: {fileID: 2008518062}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.197}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.75, y: 0.25, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -26666,7 +26666,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4, y: 0.3, z: 0.6}
+  m_Size: {x: 0.4, y: 0.4, z: 0.6}
   m_Center: {x: -0.1, y: 0.17, z: -0.04}
 --- !u!1 &2031094666
 GameObject:
@@ -27095,7 +27095,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4, y: 0.3, z: 0.6}
+  m_Size: {x: 0.4, y: 0.4, z: 0.6}
   m_Center: {x: 0, y: 0.17, z: -0.04}
 --- !u!1001 &2047148235
 PrefabInstance:
