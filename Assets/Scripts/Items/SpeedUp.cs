@@ -6,6 +6,7 @@ public class SpeedUp : MonoBehaviour, IInteractable
     [SerializeField] private float multipleOfSpeed = 1.3f;
     [Tooltip("速度アップの持続時間")]
     [SerializeField] private float speedUpDuration = 10f;
+    [SerializeField] private GameObject effectPrefab;
 
     public void OnInteract(PlayerController player = null)
     {
@@ -17,6 +18,8 @@ public class SpeedUp : MonoBehaviour, IInteractable
         else UIManager.Instance.ShowSpeedDownUI(true);
 
         player.ChangeBothSpeedForSomeTime(multipleOfSpeed, speedUpDuration, isSpeedUp);
+
+        if (effectPrefab) Instantiate(effectPrefab, transform.position, Quaternion.identity);
 
         Destroy(gameObject);
     }

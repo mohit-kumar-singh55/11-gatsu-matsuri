@@ -69,6 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JumpPowerUp
   multipleOfJumpForce: 1.3
   jumpForceUpDuration: 10
+  effectPrefab: {fileID: 5140429222138308612, guid: 6d1a4ec42ad8f2a478dd19830404661d, type: 3}
 --- !u!1001 &4910720821632679276
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -69,6 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpeedUp
   multipleOfSpeed: 1.3
   speedUpDuration: 10
+  effectPrefab: {fileID: 1487657729990373732, guid: 1373d9077e8fa3e4a935f1a8bf5cb92c, type: 3}
 --- !u!1001 &2254955264261130117
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -68,6 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StaminaUp
   staminaFreezeDuration: 10
+  effectPrefab: {fileID: 111443508225810548, guid: 01d175e9d4708104fbd3908d690effd0, type: 3}
 --- !u!1001 &4111965101897058417
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ public class StaminaDown : MonoBehaviour, IInteractable
     [SerializeField] private float multipleOfStamina = .7f;
     [Tooltip("スタミナ減少速度変更の持続時間（秒）")]
     [SerializeField] private float staminaDecrementDuration = 10f;
+    [SerializeField] private GameObject effectPrefab;
 
     public void OnInteract(PlayerController player = null)
     {
@@ -14,6 +15,8 @@ public class StaminaDown : MonoBehaviour, IInteractable
         UIManager.Instance.ShowStaminaDownUI(true);
 
         player.ChangeStaminaForSomeTime(multipleOfStamina, staminaDecrementDuration);
+
+        if (effectPrefab) Instantiate(effectPrefab, transform.position, Quaternion.identity);
 
         Destroy(gameObject);
     }

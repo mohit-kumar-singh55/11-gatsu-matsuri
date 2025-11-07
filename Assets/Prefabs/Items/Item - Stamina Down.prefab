@@ -69,6 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StaminaDown
   multipleOfStamina: 0.7
   staminaDecrementDuration: 10
+  effectPrefab: {fileID: 5390090517158578673, guid: 7ad39bab4ad3c6a43974d8b8cd9aea1a, type: 3}
 --- !u!1001 &6964617696154715535
 PrefabInstance:
   m_ObjectHideFlags: 0

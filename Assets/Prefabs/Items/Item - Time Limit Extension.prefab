@@ -68,6 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimeLimitExtension
   increaseTimeLimitBy: 20
+  effectPrefab: {fileID: 111443508225810548, guid: 0ea18cdd13d691e459f28b79ad49f737, type: 3}
 --- !u!1001 &92914865269009352
 PrefabInstance:
   m_ObjectHideFlags: 0
