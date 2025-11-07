@@ -40,6 +40,6 @@ public class MainMenuController : MonoBehaviour
             yield return new WaitForSeconds(.04f);
         }
 
-        SceneLoader.LoadScene(SCENES.LEVEL_1);
+        SceneLoader.LoadScene(SCENES.INFO_SCENE);
     }
 }

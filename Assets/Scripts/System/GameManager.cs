@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
 
         // saving current level index for reloading
         PlayerPrefs.SetInt(PLAYERPREFKEYS.LEVEL_TO_RESTART, SceneManager.GetActiveScene().buildIndex);
-        PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 1);
+        // PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 1);
         GameOverSequence();
         SceneLoader.LoadScene(SCENES.GAME_OVER);
     }
@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
 
         gameEnded = true;
 
-        PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 1);
+        // PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 1);
         GameOverSequence();
         SceneLoader.LoadScene(SCENES.GAME_CLEAR);
     }
@@ -105,8 +105,8 @@ public class GameManager : MonoBehaviour
         Instance = null;
 
         // not to reset the timer when restarting level by falling
-        PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 0);
-        PlayerPrefs.SetFloat(PLAYERPREFKEYS.TIMER_TO_START_FROM, CountdownTimer.Instance.CurrentTime);
+        // PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 0);
+        // if (CountdownTimer.Instance) PlayerPrefs.SetFloat(PLAYERPREFKEYS.TIMER_TO_START_FROM, CountdownTimer.Instance.CurrentTime);
         SceneLoader.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -114,17 +114,18 @@ public class GameManager : MonoBehaviour
     {
         Instance = null;
 
-        PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 1);
+        // PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 1);
 
-        // 0 -> main menu, 1, 2, 3 -> levels..., 4 -> game over, 5 -> game clear
+        // 0 -> main menu, 1 -> info, 2, 3, 4 -> levels..., 5 -> game clear, 6 -> game over
         int nextLevelInd = (SceneManager.GetActiveScene().buildIndex + 1) % SceneManager.sceneCountInBuildSettings;
-        nextLevelInd = nextLevelInd <= 0 ? 1 : nextLevelInd;
+        nextLevelInd = nextLevelInd <= 1 ? 2 : nextLevelInd;
         SceneManager.LoadScene(nextLevelInd);
     }
 
     public void GoToMainMenu()
     {
         Instance = null;
+
         Time.timeScale = 1f;
         if (SFXManager.Instance) SFXManager.Instance.PlayButtonClick();
         SceneLoader.LoadScene(SCENES.MAIN_MENU);

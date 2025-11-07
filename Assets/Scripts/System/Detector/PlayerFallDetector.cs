@@ -6,7 +6,8 @@ public class PlayerFallDetector : MonoBehaviour
     {
         if (other.CompareTag(TAGS.PLAYER))
         {
-            GameManager.Instance.ReloadCurrentLevelWhenFall();
+            // checking because of double collider setup on player
+            if (GameManager.Instance) GameManager.Instance.ReloadCurrentLevelWhenFall();
         }
     }
 }
