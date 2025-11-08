@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     private UIManager uiManager;
+    private PlayerController playerController;
     private bool gameEnded = false;
     private bool pauseMenuActive = false;
     private bool hasKey = false;
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour
 
     // cheat keys
     private readonly KeyCode cheatKeyNextLevel = KeyCode.L;
+    private readonly KeyCode cheatKeyInfiniteJump = KeyCode.J;
 
     private void Awake()
     {
@@ -34,14 +36,16 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         uiManager = UIManager.Instance;
+        playerController = PlayerController.Instance;
     }
 
     void Update()
     {
         if (gameEnded) return;
 
-        // cheat to go to next level
+        // cheat keys
         if (Input.GetKeyDown(cheatKeyNextLevel)) GoToNextLevel();
+        if (Input.GetKeyDown(cheatKeyInfiniteJump) && playerController) playerController.ToggleInfiniteJump();
         // pause menu toggle
         else if (Input.GetKeyDown(pauseMenuKey)) SetShowMenu();
     }

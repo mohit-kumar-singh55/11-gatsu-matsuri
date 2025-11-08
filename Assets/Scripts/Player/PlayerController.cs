@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     private int _standingJumpHash;
     private int _runningJumpHash;
     private bool _freezeStamina = false;
+    private bool _infiniteJump = false;
 
     public ObjectPropogator CurrentPlatform { set => currentPlatform = value; }   // ** stuff to make player move with platform and not slide off **
     public bool FreezeStamina { get => _freezeStamina; set => _freezeStamina = value; }
@@ -185,9 +186,11 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat(_velocityHash, _velocity);
     }
 
+    public void ToggleInfiniteJump() => _infiniteJump = !_infiniteJump;
+
     void HandleJump()
     {
-        if (IsGrounded() && !playerFreezed)
+        if ((IsGrounded() && !playerFreezed) || _infiniteJump)
         {
             if (isIdle) animator.SetTrigger(_standingJumpHash);
             else animator.SetTrigger(_runningJumpHash);
