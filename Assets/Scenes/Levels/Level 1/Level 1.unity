@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.05
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.1886792, g: 0.159, b: 0.159, a: 1}
+  m_AmbientSkyColor: {r: 0.572327, g: 0.572327, b: 0.572327, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -3745,14 +3745,6 @@ PrefabInstance:
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 954907242}
-    - target: {fileID: 3116612039467892226, guid: 5c7bc302f21d6b947977a45523433d04, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -50.19544
-      objectReference: {fileID: 0}
-    - target: {fileID: 4930117455537579265, guid: 5c7bc302f21d6b947977a45523433d04, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -50.19544
-      objectReference: {fileID: 0}
     - target: {fileID: 5184829236007823938, guid: 5c7bc302f21d6b947977a45523433d04, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
