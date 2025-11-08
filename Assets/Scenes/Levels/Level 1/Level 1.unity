@@ -8573,6 +8573,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Item - Time Limit Extension
       objectReference: {fileID: 0}
+    - target: {fileID: 1180414736781194734, guid: 63f01d8172f5f6243aaaecb78b4e75aa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3147384043456396875, guid: 63f01d8172f5f6243aaaecb78b4e75aa, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.38085604
