@@ -64,6 +64,7 @@ ExportedObj/
 *.xcodeproj/
 Pods/
 DerivedData/
+Installer/
 
 # === Unity Asset Store Tools (optional) ===
 # /Assets/AssetStoreTools*
