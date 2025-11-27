@@ -1,24 +1,26 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class EnemyAttack : MonoBehaviour
 {
     private Animator animator;
-    private GameObject player;
     private PlayerController playerController;
     private CameraController cameraController;
 
     private bool isAttacking = false;
 
+    private const float attackCinematicDuration = 3.5f;
+    private const float postAttackDelay = 3f;
+
     public bool IsAttacking => isAttacking;
 
     void Start()
     {
+        // initialize
         animator = GetComponent<Animator>();
-        player = PlayerController.Instance.gameObject;
         cameraController = CameraController.Instance;
-
-        playerController = player.GetComponent<PlayerController>();
+        playerController = PlayerController.Instance;
     }
 
     // NPCがプレイヤーを蹴る
@@ -32,47 +34,38 @@ public class EnemyAttack : MonoBehaviour
 
     IEnumerator PlayAttackSequence(int attackAnimHash)
     {
-        // ** 🔁 Step 1: Disable player control (プレイヤーの操作を無効にする) **
+        // ** 🔁 Step 1: Disable player control **
         playerController.FreezePlayer(true);
         playerController.enabled = false;
 
-        // ** 🔁 Step 2: Switch to cinematic camera (シネマティックカメラに切り替える) **
+        // ** 🔁 Step 2: Switch to cinematic camera **
         cameraController.ShowCinematicCam(true);
 
-        // ** 🔁 Step 3: Slow down time (時間を遅くする) **
+        // ** 🔁 Step 3: Slow down time **
         Time.timeScale = 0.15f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
-        // ** 🔁 Step 4: Play attack animation (アニメーションを再生する) **
+        // ** 🔁 Step 4: Play attack animation **
         animator.SetTrigger(attackAnimHash);
 
         // ** 🔁 Step 5: Wait for attack animation to over **
-        yield return new WaitForSecondsRealtime(3.5f);
-
-        // playing attacked sfx (被攻撃の効果音を再生中)
-        // AudioManager.Instance.PlayKickExplosionSFX();
+        yield return new WaitForSecondsRealtime(attackCinematicDuration);
 
         // Screen Shake
         cameraController.ScreenShake();
 
-        // ** 🔁 Step 6: Return to normal (元に戻る) **
+        // ** 🔁 Step 6: Return to normal **
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
 
         cameraController.ShowCinematicCam(false);
 
-        // playing bgm audios (BGMオーディオを再生する)
-        // AudioManager.Instance.PlayBGM();
-
-        // ** 🔁 Step 7: Disabling animations **
-        playerController.enabled = false;
-
         isAttacking = false;
 
-        // waiting for animation to end completely
-        yield return new WaitForSeconds(3f);
+        // Wait for animation to over
+        yield return new WaitForSeconds(postAttackDelay);
 
-        // ** 🔁 Step 8: Trigger restart level **
+        // ** 🔁 Step 7: Trigger restart level **
         GameManager.Instance.ReloadCurrentLevelWhenFall();
     }
 }

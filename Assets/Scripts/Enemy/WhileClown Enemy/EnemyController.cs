@@ -23,22 +23,22 @@ public class EnemyController : MonoBehaviour
     [Header("Vision Settings")]
     [SerializeField] float viewRadius = 10f;
     [Range(0f, 360f)][SerializeField] float viewAngle = 90f;
-    [SerializeField] LayerMask obstacleMask;      // like wall, rocks, etc (壁や岩など)
+    [SerializeField] LayerMask obstacleMask;      // 壁や岩など
 
     [Header("Detection Settings")]
     [SerializeField] float detectionTime = 2f;
     private float currentDetectTimer = 0f;
 
     [Header("Movement Settings")]
-    [SerializeField] float walkSpeed = 3f;       // enemy walk speed  -  this will override navmash agent's default speed (敵の移動速度 - これはナビメッシュエージェントのデフォルト速度を上書きします)
-    [SerializeField] float chaseSpeed = 5f;       // speed to chase player (プレイヤーを追いかける速度)
-    [SerializeField] float attackDistance = 2f;   // distance to attack player (プレイヤーを攻撃する距離)
+    [SerializeField] float walkSpeed = 3f;       // 敵の移動速度 - これはナビメッシュエージェントのデフォルト速度を上書きします
+    [SerializeField] float chaseSpeed = 5f;       // プレイヤーを追いかける速度
+    [SerializeField] float attackDistance = 2f;   // プレイヤーを攻撃する距離
 
-    // time to lose player if player is not in sight (プレイヤーが視界にない場合は、プレイヤーを失う時間です。)
+    // プレイヤーが視界にない場合は、プレイヤーを失う時間です。
     [SerializeField] float losePlayerTime = 3f;
     private float losePlayerTimer = 0f;
 
-    // suspicious timer -> timer to search for player (疑わしいタイマー -> プレイヤーを探すためのタイマー)
+    // 疑わしいタイマー -> プレイヤーを探すためのタイマー
     [SerializeField] float inspectionTime = 3f;
     private float inspectionTimer = 0f;
 
@@ -46,8 +46,6 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent agent;
     private Animator animator;
     private EnemyAttack enemyAttack;
-
-    // private AudioManager audioManager;
 
     // for animator
     private float _velocity = 0f;
@@ -70,8 +68,6 @@ public class EnemyController : MonoBehaviour
 
         _velocityHash = Animator.StringToHash(ANIM_SPEED);
         _isAttackingHash = Animator.StringToHash(ANIM_ATTACKING);
-
-        // audioManager = AudioManager.Instance;
     }
 
     void Update()
@@ -93,16 +89,15 @@ public class EnemyController : MonoBehaviour
     }
 
     /// <summary>
-    /// Patrol behaviour for the patrollable enemy.
-    /// This function makes the enemy patrol and set to chasing state if it sees the player.
     /// パトロール可能な敵のためのパトロール行動。
     /// この機能は、敵が巡回し、プレイヤーを見ると追跡状態に設定します。
     /// </summary>
     void PatrolBehaviour()
     {
-        if (player == null) return;
+        if (!player) return;
 
         agent.speed = walkSpeed;
+        agent.isStopped = false;
 
         if (IsPlayerInSight())
         {
@@ -110,21 +105,14 @@ public class EnemyController : MonoBehaviour
 
             if (currentDetectTimer >= detectionTime)
             {
-                // sfx
-                // audioManager.PlayPlayerSpottedSFX(enemyGender);
-
-                // chasing player
+                // 敵の状態を追跡に変更
                 currentState = EnemyState.Chasing;
                 agent.SetDestination(player.position);
 
                 Debug.Log("❗ PLAYER DETECTED! CHASING...");
             }
         }
-        else
-        {
-            currentDetectTimer -= Time.deltaTime;
-            currentDetectTimer = Mathf.Clamp(currentDetectTimer, 0f, detectionTime);
-        }
+        else currentDetectTimer = Mathf.Max(0f, currentDetectTimer - Time.deltaTime);
     }
 
     void ChasingBehaviour()
@@ -132,24 +120,18 @@ public class EnemyController : MonoBehaviour
         if (enemyAttack.IsAttacking) return;
 
         agent.speed = chaseSpeed;
-        agent.SetDestination(player.position);      // follow player
-
-        // stopping bgm audios
-        // audioManager.StopBGM();
+        agent.SetDestination(player.position);      // プレイヤーを追いかける
 
         if (IsPlayerInSight())
         {
-            // slash the player if close enough
+            // 近くにいる場合は、プレイヤーを切る
             float distToPlayer = Vector3.Distance(transform.position, player.position);
 
             // ********** Attack **********
-            // attack if player is close enough
+            // プレイヤーが十分に近い場合に攻撃する
             if (distToPlayer <= attackDistance)
             {
-                // slow motion sfx
-                // audioManager.PlaySlowMotionSFX();
-
-                // stopping agent and attack
+                // 敵を止めて攻撃
                 agent.isStopped = true;
                 enemyAttack.Attack(_isAttackingHash);
 
@@ -160,7 +142,7 @@ public class EnemyController : MonoBehaviour
             }
             else agent.isStopped = false;
 
-            // reset timer
+            // タイマーをリセット
             losePlayerTimer = losePlayerTime;
             inspectionTimer = inspectionTime;
         }
@@ -171,19 +153,16 @@ public class EnemyController : MonoBehaviour
 
             if (losePlayerTimer < 0)
             {
-                // stopping and playing suspicious (inspecting) animation
+                // 敵を止めて、疑わしい（調査中）アニメーションを再生する
                 agent.isStopped = true;
                 Debug.Log("🔍 Inspecting the place");
 
-                // suspicious (inspecting) cooldown timer
+                // 疑わしい（調査中）アニメーションの再生後、疑わしい（調査中）時間を減らす
                 inspectionTimer -= Time.deltaTime;
 
-                // inspection finished and player lost, return to patrol...
+                // 調査が終了し、プレイヤーが失われた場合、パトロールに戻ります...
                 if (inspectionTimer <= 0)
                 {
-                    // playing bgm audios
-                    // audioManager.PlayBGM();
-
                     agent.isStopped = false;
                     currentState = EnemyState.Patrol;
 
@@ -194,12 +173,6 @@ public class EnemyController : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks whether the player is in the enemy's sight.
-    /// This does the following checks:
-    /// 1. Is the player in the view radius?
-    /// 2. Is the player in the view angle?
-    /// 3. Is there an obstacle in the way (raycast check)?
-    /// If any of these conditions are false, the player is not in sight
     /// プレイヤーが敵の視界にいるかどうかを確認します。
     /// これは次のチェックを行います:
     /// 1. プレイヤーは視野半径内にいるかどうか？
@@ -225,7 +198,7 @@ public class EnemyController : MonoBehaviour
         return true;
     }
 
-    // ** updating move animation in blend tree (移動アニメーションを更新する) **
+    // ** blend treeでの移動アニメーションを更新する **
     void UpdateMoveAnimation()
     {
         float targetVelocity;
@@ -238,22 +211,15 @@ public class EnemyController : MonoBehaviour
         animator.SetFloat(_velocityHash, _velocity);
     }
 
-    // Disables this script after triggering the lose condition.
     // 敵のlose条件を発生した後にこのスクリプトを無効化します。
     void StopEnemyMovement()
     {
-        // stop all audios
-        // audioManager.StopBGM();
-
         // stop enemy movement
         agent.isStopped = true;
         animator.SetFloat(_velocityHash, 0f);
         enabled = false;
-
-        // ** trigger lose condition called in enemy attack script **
     }
 
-    // for visual debugging purpose only
     // 視覚的デバッグ目的のみ
     void OnDrawGizmosSelected()
     {
@@ -268,7 +234,6 @@ public class EnemyController : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position + rightBoundary * viewRadius);
     }
 
-    // for visual debugging purpose only
     // 視覚的デバッグ目的のみ
     public Vector3 DirFromAngle(float angle, bool global)
     {

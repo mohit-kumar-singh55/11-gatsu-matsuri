@@ -29,6 +29,7 @@ public class CountdownTimer : MonoBehaviour
         uiManager = UIManager.Instance;
     }
 
+    // ** タイマーの更新 **
     void Update()
     {
         if (!isRunning) return;
@@ -52,6 +53,7 @@ public class CountdownTimer : MonoBehaviour
 
     public void IncreaseTime(float amount) => currentTime += amount;
 
+    // ** タイマーをリセットするか、保存された時間から開始するかを確認 **
     public void CheckIfReset()
     {
         if (PlayerPrefs.GetInt(PLAYERPREFKEYS.RESET_TIMER, 1) == 1) currentTime = startTime;

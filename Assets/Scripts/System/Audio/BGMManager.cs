@@ -34,7 +34,7 @@ public class BGMManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Changing BGM depending on scene
+        // Changing BGM depending on scene (シーンに応じてBGMを変更)
         int sceneIndex = scene.buildIndex;
 
         if (sceneIndex <= SCENES.LEVEL_2) PlayBGM(mainMenuBGM);
@@ -45,7 +45,7 @@ public class BGMManager : MonoBehaviour
     void PlayBGM(AudioClip clip, bool loop = true)
     {
         if (bgmSource.clip == clip && bgmSource.isPlaying)
-            return; // Already playing correct BGM
+            return; // Already playing correct BGM (すでに正しいBGMが再生されている)
 
         bgmSource.clip = clip;
         bgmSource.loop = loop;

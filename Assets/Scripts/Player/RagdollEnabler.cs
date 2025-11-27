@@ -11,6 +11,7 @@ public class RagdollEnabler : MonoBehaviour
 
     private void Awake()
     {
+        // initialize
         Rigidbodies = RagdollRoot.GetComponentsInChildren<Rigidbody>();
         Joints = RagdollRoot.GetComponentsInChildren<CharacterJoint>();
         Colliders = RagdollRoot.GetComponentsInChildren<Collider>();

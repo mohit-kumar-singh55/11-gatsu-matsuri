@@ -1,25 +1,20 @@
 using UnityEngine;
-using UnityEngine.AI;
 
 [RequireComponent(typeof(EnemyController), typeof(EnemyPatrol))]
 public class EnemyAIManager : MonoBehaviour
 {
     private EnemyController enemy;
     private EnemyPatrol patrol;
-    private Animator animator;
-    private NavMeshAgent agent;
-
-
 
     private void Awake()
     {
         enemy = GetComponent<EnemyController>();
         patrol = GetComponent<EnemyPatrol>();
-        agent = GetComponent<NavMeshAgent>();
     }
 
     void Update()
     {
+        // 敵の現在の状態に基づいて敵の行動を制御
         switch (enemy.CurrentState)
         {
             case EnemyState.Patrol:

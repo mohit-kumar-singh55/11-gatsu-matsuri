@@ -11854,11 +11854,26 @@ PrefabInstance:
       propertyPath: StaminaFreezeUI
       value: 
       objectReference: {fileID: 1220193984}
+    - target: {fileID: 8279760100619906302, guid: b7077cccf06a865449e5f6acb41ff099, type: 3}
+      propertyPath: notificationText
+      value: 
+      objectReference: {fileID: 946189081}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7077cccf06a865449e5f6acb41ff099, type: 3}
+--- !u!114 &946189081 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9108879261690805037, guid: 0ec8a417bebc97d41b8e994936bbad7c, type: 3}
+  m_PrefabInstance: {fileID: 1220193983}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &954907241
 PrefabInstance:
   m_ObjectHideFlags: 0

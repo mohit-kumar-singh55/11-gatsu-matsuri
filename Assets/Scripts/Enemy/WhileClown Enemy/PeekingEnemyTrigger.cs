@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+// プレイヤーがトリガーゾーンに入るとピーキングエネミーをアクティブにし、出ると非アクティブにします。
 public class PeekingEnemyTrigger : MonoBehaviour
 {
     [SerializeField] private GameObject peekingEnemy;

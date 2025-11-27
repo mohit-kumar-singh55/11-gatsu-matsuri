@@ -35,6 +35,6 @@ public class CameraController : MonoBehaviour
     }
 
     // Impulse when getting attacked
-    // 蹴られたときの衝動
+    // 攻撃を受けたときの衝動
     public void ScreenShake() => impulseSource.GenerateImpulse(20f);
 }

@@ -30,10 +30,14 @@ public class FloorBlink : MonoBehaviour
         if (mode == Mode.Blink) StartCoroutine(BlinkOrDestroyCoroutine());
         if (disappearChildMesh)
         {
+            // 子オブジェクトをリストに追加
             foreach (Transform child in transform) childObjects.Add(child.gameObject);
         }
     }
 
+    /// <summary>
+    /// Enable or disable the collider and mesh renderer of this object.
+    /// </summary>
     void BlinkSelf(bool appear = true)
     {
         col.enabled = appear;
@@ -59,8 +63,10 @@ public class FloorBlink : MonoBehaviour
 
     IEnumerator BlinkOrDestroyCoroutine()
     {
+        // 点滅・消滅処理
         bool appear = false;
 
+        // 点滅モードかどうか
         bool isBlink = mode == Mode.Blink;
 
         while (true)

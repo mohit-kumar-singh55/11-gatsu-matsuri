@@ -18,7 +18,7 @@ public class PlayerCollisionHandler : MonoBehaviour
         }
     }
 
-    // ** stuff to make player move with platform and not slide off **
+    // ** プレイヤーがプラットフォームと一緒に動くようにするためのもの **
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.TryGetComponent(out ObjectPropogator platform))

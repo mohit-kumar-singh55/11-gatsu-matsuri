@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,7 @@ public class UIManager : MonoBehaviour
 
     [Header("InGame UI")]
     [SerializeField] TMP_Text timerText;
+    [SerializeField] TMP_Text notificationText;
 
     [Header("Pause Menu UI")]
     [SerializeField] GameObject pauseMenuUI;
@@ -55,5 +57,20 @@ public class UIManager : MonoBehaviour
     {
         int index = Mathf.Clamp(Mathf.FloorToInt(currentStamina / maxStamina * (staminaFrames.Length - 1)), 0, staminaFrames.Length - 1);
         staminaImage.sprite = staminaFrames[staminaFrames.Length - 1 - index];
+    }
+
+    public void ShowNotification(string message, float duration)
+    {
+        StopAllCoroutines();
+        notificationText.text = message;
+        notificationText.gameObject.SetActive(true);
+        StartCoroutine(HideNotificationAfterDelay(duration));
+    }
+
+    // coroutines
+    IEnumerator HideNotificationAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        notificationText.gameObject.SetActive(false);
     }
 }

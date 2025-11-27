@@ -7,7 +7,7 @@ public class EnemyPatrol : MonoBehaviour
 {
     [SerializeField] Transform waypointParent;
     [SerializeField] float waitTimeAtWaypoint = 2f;
-    
+
     private List<Transform> waypoints = new();
     private int currentWaypointIndex = 0;
     private NavMeshAgent agent;
@@ -23,7 +23,6 @@ public class EnemyPatrol : MonoBehaviour
             return;
         }
 
-        // Cache all waypoints once
         // waypointsを一度にキャッシュ
         foreach (Transform child in waypointParent) waypoints.Add(child);
 
@@ -38,11 +37,9 @@ public class EnemyPatrol : MonoBehaviour
 
     void Update()
     {
-        // if agent hasn't reached the waypoint or no waypoints are assigned, do nothing
         // agentがwaypointに到達していない場合、またはウwaypointsが割り当てられていない場合は、何もしない。
         if (agent.pathPending || waypoints?.Count == 0) return;
 
-        // wait at waypoint
         // waypointに待機
         if (!waiting && agent.remainingDistance <= agent.stoppingDistance)
         {
@@ -50,7 +47,6 @@ public class EnemyPatrol : MonoBehaviour
             waitTimer = waitTimeAtWaypoint;
         }
 
-        // if waiting, decrement timer and if timer runs out, go to next waypoint
         // 待機中ならタイマーを減らして、タイマーが終わったら次のwaypointに行く
         if (waiting)
         {
@@ -63,7 +59,6 @@ public class EnemyPatrol : MonoBehaviour
         }
     }
 
-    // go to next waypoint
     // 次のwaypointに行く
     void GoToNextWaypoint()
     {

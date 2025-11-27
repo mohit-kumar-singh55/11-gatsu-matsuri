@@ -17,7 +17,7 @@ public class ObjectPropogator : MonoBehaviour
     private Vector3 direction;
     private float timer = 0f;
 
-    // ** stuff to make player move with platform and not slide off **
+    // ** プレイヤーがプラットフォームと一緒に動くようにするためのもの **
     private Vector3 lastPos;
     private Vector3 platformVelocity;
 
@@ -25,25 +25,35 @@ public class ObjectPropogator : MonoBehaviour
 
     void Start()
     {
+        // initialize
         startPos = transform.position;
         lastPos = startPos;
         timer = startAfterSeconds;
 
+        // 動く方向
         direction = axis == ObjectPropogatorAxis.X ? Vector3.right : axis == ObjectPropogatorAxis.Y ? Vector3.up : Vector3.forward;
     }
 
     void Update()
     {
+        // オブジェクトを動かす
+        MoveObject();
+
+        // ** プレイヤーがプラットフォームと一緒に動くようにするためのもの **
+        // 速度を求める
+        platformVelocity = (transform.position - lastPos) / Time.deltaTime;
+        platformVelocity.y = 0; // Y軸の速度は無視する
+        lastPos = transform.position;
+    }
+
+    private void MoveObject()
+    {
+        // 時間に基づいてオフセットを計算
         timer += Time.deltaTime * speed * Mathf.PI * 2f; // radians per second
 
-        float offset = Mathf.Sin(timer) * distance;
+        float offset = Mathf.Sin(timer) * distance; // Sine wave oscillation
 
+        // 新しい位置を設定
         transform.position = startPos + direction * offset;
-
-        // ** stuff to make player move with platform and not slide off **
-        // Calculate velocity
-        platformVelocity = (transform.position - lastPos) / Time.deltaTime;
-        platformVelocity.y = 0; // Ignore vertical velocity
-        lastPos = transform.position;
     }
 }

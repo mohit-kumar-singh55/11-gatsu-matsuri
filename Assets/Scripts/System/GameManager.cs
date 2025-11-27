@@ -54,7 +54,6 @@ public class GameManager : MonoBehaviour
 
     public void SetShowMenu()
     {
-        Debug.Log("Toggling Pause Menu");
         pauseMenuActive = !pauseMenuActive;
         uiManager.ShowPauseMenu(pauseMenuActive);
         Time.timeScale = pauseMenuActive ? 0 : 1;

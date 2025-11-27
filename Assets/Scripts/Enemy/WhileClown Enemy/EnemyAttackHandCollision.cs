@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class EnemyAttackHandCollision : MonoBehaviour
 {
     private Collider col;
