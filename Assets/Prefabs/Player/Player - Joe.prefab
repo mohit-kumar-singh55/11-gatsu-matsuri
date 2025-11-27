@@ -1234,7 +1234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   walkSpeed: 2
-  sprintSpeed: 5
+  sprintSpeed: 6
   jumpForce: 400
   groundCheckDistance: 0.3
   useStamina: 0

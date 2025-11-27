@@ -5752,6 +5752,10 @@ PrefabInstance:
       propertyPath: cm_cam
       value: 
       objectReference: {fileID: 661389185}
+    - target: {fileID: 3873865114393975097, guid: a801518118c28734e93866fcef5b68dc, type: 3}
+      propertyPath: sprintSpeed
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
