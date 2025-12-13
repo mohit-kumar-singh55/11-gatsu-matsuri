@@ -26,49 +26,47 @@ public class EnemyAttack : MonoBehaviour
         playerController = PlayerController.Instance;
     }
 
-    // NPCがプレイヤーを蹴る
+    // 敵の攻撃
     public void Attack(int attackAnimHash)
     {
         if (isAttacking) return;
 
         isAttacking = true;
-        StartCoroutine(PlayAttackSequence(attackAnimHash));     // attacking sequence
+        StartCoroutine(PlayAttackSequence(attackAnimHash));     // 攻撃開始
     }
 
     IEnumerator PlayAttackSequence(int attackAnimHash)
     {
-        // ** 🔁 Step 1: Disable player control **
+        // ** 1: プレイヤーを完全に止める **
         playerController.FreezePlayer(true);
         playerController.enabled = false;
 
-        // ** 🔁 Step 2: Switch to cinematic camera **
+        // ** 2: cinematic カメラに切り替える **
         cameraController.ShowCinematicCam(true);
 
-        // ** 🔁 Step 3: Slow down time **
+        // ** 3: 時間を遅くする **
         Time.timeScale = 0.15f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
-        // ** 🔁 Step 4: Play attack animation **
+        // ** 4: 攻撃アニメション **
         animator.SetTrigger(attackAnimHash);
 
-        // ** 🔁 Step 5: Wait for attack animation to over **
+        // ** 5: 攻撃アニメションが終わるまで待つ **
         yield return new WaitForSecondsRealtime(attackCinematicDuration);
 
-        // Screen Shake
+        // 画面を揺らす
         cameraController.ScreenShake();
 
-        // ** 🔁 Step 6: Return to normal **
+        // ** 6: 全てを元に戻す **
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
-
         cameraController.ShowCinematicCam(false);
-
         isAttacking = false;
 
-        // Wait for animation to over
+        // リスタートする前に、ちょっと待つ
         yield return new WaitForSeconds(postAttackDelay);
 
-        // ** 🔁 Step 7: Trigger restart level **
+        // ** 7: このレベルをリスタート **
         GameManager.Instance.ReloadCurrentLevelWhenFall();
     }
 }

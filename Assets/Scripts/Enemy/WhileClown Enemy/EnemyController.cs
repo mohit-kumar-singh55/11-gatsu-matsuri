@@ -6,7 +6,7 @@ public enum EnemyState { Patrol, Chasing };
 /*
 * パトロール -> プレイヤー検出 ->
 * 追跡 -> プレイヤーの視線を失う（数秒後） ->
-* 疑わしい（調査中）数秒間 -> パトロールに戻る
+* 検査中数秒間 -> パトロールに戻る
 */
 
 /// <summary>
@@ -65,6 +65,7 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
+        // initialize
         player = FindAnyObjectByType<PlayerController>().gameObject.transform;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
@@ -100,103 +101,112 @@ public class EnemyController : MonoBehaviour
     {
         if (!player) return;
 
+        // 敵を動かす
         agent.speed = walkSpeed;
         agent.isStopped = false;
 
-        if (IsPlayerInSight())
+        // ** プレイヤーが視界に入っていない場合 **
+        if (!IsPlayerInSight())
         {
-            currentDetectTimer += Time.deltaTime;
-
-            if (currentDetectTimer >= detectionTime)
-            {
-                // 敵の状態を追跡に変更
-                currentState = EnemyState.Chasing;
-                agent.SetDestination(player.position);
-
-                Debug.Log("❗ PLAYER DETECTED! CHASING...");
-            }
+            currentDetectTimer = Mathf.Max(0f, currentDetectTimer - Time.deltaTime);
+            return;
         }
-        else currentDetectTimer = Mathf.Max(0f, currentDetectTimer - Time.deltaTime);
+
+        // ** プレイヤーが視界にいる場合 **
+        currentDetectTimer += Time.deltaTime;
+
+        if (currentDetectTimer >= detectionTime)
+        {
+            // 敵の状態を追跡に変更
+            currentState = EnemyState.Chasing;
+            agent.SetDestination(player.position);
+            // Debug.Log("❗ PLAYER DETECTED! CHASING...");
+        }
     }
 
     private void ChasingBehaviour()
     {
         if (enemyAttack.IsAttacking) return;
 
+        // プレイヤーを追いかける 
         agent.speed = chaseSpeed;
-        agent.SetDestination(player.position);      // プレイヤーを追いかける
+        agent.SetDestination(player.position);
 
+        // ** プレイヤーが視界にいる場合 **
         if (IsPlayerInSight())
         {
-            // 近くにいる場合は、プレイヤーを切る
-            float distToPlayer = Vector3.Distance(transform.position, player.position);
-
-            // ********** Attack **********
-            // プレイヤーが十分に近い場合に攻撃する
-            if (distToPlayer <= attackDistance)
-            {
-                // 敵を止めて攻撃
-                agent.isStopped = true;
-                enemyAttack.Attack(_isAttackingHash);
-
-                // *** Stop enemy movement ***
-                StopEnemyMovement();
-
-                Debug.Log("🗡️ Attacking player");
-            }
-            else agent.isStopped = false;
-
-            // タイマーをリセット
-            losePlayerTimer = losePlayerTime;
-            inspectionTimer = inspectionTime;
+            CheckDistanceAndAttack();
+            return;
         }
-        else
+
+        // ** プレイヤーが視界から外れた場合 **
+        SearchPlayer();
+    }
+
+    // 追跡中、プレイヤーが視界にいる場合
+    private void CheckDistanceAndAttack()
+    {
+        // 敵からプレイヤーまでの距離
+        float distToPlayer = Vector3.Distance(transform.position, player.position);
+
+        // ********** Attack **********
+        // プレイヤーが十分に近い場合に攻撃する
+        if (distToPlayer <= attackDistance)
         {
-            // chasing cooldown timer
-            losePlayerTimer -= Time.deltaTime;
+            // 敵を完全に止めて、攻撃する
+            StopEnemyMovement();
+            enemyAttack.Attack(_isAttackingHash);       // 攻撃
+            // Debug.Log("🗡️ Attacking player");
+        }
+        else agent.isStopped = false;
 
-            if (losePlayerTimer < 0)
+        // タイマーをリセット
+        losePlayerTimer = losePlayerTime;
+        inspectionTimer = inspectionTime;
+    }
+
+    // 追跡中、プレイヤーが視界から外れた場合
+    private void SearchPlayer()
+    {
+        // プレイヤーを失った場合、タイマーの更新
+        losePlayerTimer -= Time.deltaTime;
+
+        // プレイヤーが失ったら、検査する
+        if (losePlayerTimer < 0)
+        {
+            // 敵を止めて、検査中アニメーションを再生する
+            agent.isStopped = true;
+            // Debug.Log("🔍 Inspecting the place");
+
+            // 検査時間を減らす
+            inspectionTimer -= Time.deltaTime;
+
+            // 検査が終了し、プレイヤーが失われた場合、巡回状態に戻る
+            if (inspectionTimer <= 0)
             {
-                // 敵を止めて、疑わしい（調査中）アニメーションを再生する
-                agent.isStopped = true;
-                Debug.Log("🔍 Inspecting the place");
-
-                // 疑わしい（調査中）アニメーションの再生後、疑わしい（調査中）時間を減らす
-                inspectionTimer -= Time.deltaTime;
-
-                // 調査が終了し、プレイヤーが失われた場合、パトロールに戻ります...
-                if (inspectionTimer <= 0)
-                {
-                    agent.isStopped = false;
-                    currentState = EnemyState.Patrol;
-
-                    Debug.Log("👁️ Lost player. Returning to patrol.");
-                }
+                agent.isStopped = false;
+                currentState = EnemyState.Patrol;
+                // Debug.Log("👁️ Lost player. Returning to patrol.");
             }
         }
     }
 
-    /// <summary>
-    /// プレイヤーが敵の視界にいるかどうかを確認します。
-    /// これは次のチェックを行います:
-    /// 1. プレイヤーは視野半径内にいるかどうか？
-    /// 2. プレイヤーは視野角度内にいるかどうか？
-    /// 3. 視野の間に障害物があるかどうか（レイキャストチェック）？
-    /// いずれかの条件が偽の場合、プレイヤーは視界にいない
-    /// </summary>
+    // プレイヤーが敵の視界にいるかどうかを確認します。
     private bool IsPlayerInSight()
     {
+        // ** プレイヤーは視野半径内にいるかどうか **
         Vector3 enemyPosition = transform.position;
         Vector3 dirToPlayer = (player.position - enemyPosition).normalized;
         float distToPlayer = Vector3.Distance(enemyPosition, player.position);
 
+        // 視野半径内にプレイヤーがいない場合
         if (distToPlayer > viewRadius) return false;
 
+        // ** プレイヤーは視野角度内にいるかどうか **
         float angleToPlayer = Vector3.Angle(transform.forward, dirToPlayer);
         if (angleToPlayer > viewAngle / 2f) return false;
 
-        // this obstacle mask is so that if player is hiding behind any obstacle this raycast should be blocked by the obstacle
-        // この障害物マスクは、プレイヤーが障害物の後ろに隠れている場合、このレイキャストが障害物によってブロックされるようにするためのものです。
+        // プレイヤーが障害物の後ろに隠れている場合
         if (Physics.Raycast(enemyPosition, dirToPlayer, distToPlayer, obstacleMask)) return false;
 
         return true;
@@ -215,10 +225,9 @@ public class EnemyController : MonoBehaviour
         animator.SetFloat(_velocityHash, _velocity);
     }
 
-    // 敵のlose条件を発生した後にこのスクリプトを無効化します。
+    // 敵を完全に止める
     private void StopEnemyMovement()
     {
-        // stop enemy movement
         agent.isStopped = true;
         animator.SetFloat(_velocityHash, 0f);
         enabled = false;
