@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// ゲームオーバー時の処理
+/// </summary>
 public class GameOverManager : MonoBehaviour
 {
     private SFXManager sfxManager;
@@ -15,7 +18,7 @@ public class GameOverManager : MonoBehaviour
         SceneLoader.LoadScene(SCENES.MAIN_MENU);
     }
 
-    // restart game from level 1
+    // レベル1からゲームを再スタートする
     public void RestartGame()
     {
         // PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 1);
@@ -23,6 +26,7 @@ public class GameOverManager : MonoBehaviour
         SceneLoader.LoadScene(SCENES.LEVEL_1);
     }
 
+    // 現在のレベルからゲームを再スタートする
     public void RestartLevel()
     {
         // PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 1);

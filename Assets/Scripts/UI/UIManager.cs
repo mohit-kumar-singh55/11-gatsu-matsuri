@@ -3,10 +3,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// UI を管理するクラス
+/// </summary>
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
+    #region Serialize Fields
     [Header("InGame UI")]
     [SerializeField] TMP_Text timerText;
     [SerializeField] TMP_Text notificationText;
@@ -25,6 +29,7 @@ public class UIManager : MonoBehaviour
     [Header("Stamina UI")]
     [SerializeField] Image staminaImage;
     [SerializeField] Sprite[] staminaFrames;
+    #endregion
 
     void Awake()
     {

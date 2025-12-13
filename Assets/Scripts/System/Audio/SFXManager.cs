@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// SFX を管理するクラス
+/// </summary>
 [RequireComponent(typeof(AudioSource))]
 public class SFXManager : MonoBehaviour
 {

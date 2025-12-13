@@ -1,12 +1,15 @@
 using UnityEngine;
 
+/// <summary>
+/// プレイヤーの落下判定
+/// </summary>
 public class PlayerFallDetector : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(TAGS.PLAYER))
         {
-            // checking because of double collider setup on player
+            // プレイヤーが落下したらリセット
             if (GameManager.Instance) GameManager.Instance.ReloadCurrentLevelWhenFall();
         }
     }

@@ -4,19 +4,18 @@ using UnityEngine.AI;
 public enum EnemyState { Patrol, Chasing };
 
 /*
-* Patrol -> Player Detected -> 
-* Chasing -> Player sight lost (after a few seconds) -> 
-* Suspicious (inspecting) for a few seconds -> Return to patrol
-*/
-/*
 * パトロール -> プレイヤー検出 ->
 * 追跡 -> プレイヤーの視線を失う（数秒後） ->
 * 疑わしい（調査中）数秒間 -> パトロールに戻る
 */
+
+/// <summary>
+/// 敵の行動を制御するクラス
+/// </summary>
 [RequireComponent(typeof(NavMeshAgent), typeof(Animator), typeof(EnemyAttack))]
 public class EnemyController : MonoBehaviour
 {
-    #region Fields
+    #region Serialized Fields
     [Header("General Settings")]
     [SerializeField] EnemyState currentState = EnemyState.Patrol;
 
@@ -27,7 +26,7 @@ public class EnemyController : MonoBehaviour
 
     [Header("Detection Settings")]
     [SerializeField] float detectionTime = 2f;
-    private float currentDetectTimer = 0f;
+
 
     [Header("Movement Settings")]
     [SerializeField] float walkSpeed = 3f;       // 敵の移動速度 - これはナビメッシュエージェントのデフォルト速度を上書きします
@@ -36,28 +35,33 @@ public class EnemyController : MonoBehaviour
 
     // プレイヤーが視界にない場合は、プレイヤーを失う時間です。
     [SerializeField] float losePlayerTime = 3f;
-    private float losePlayerTimer = 0f;
 
     // 疑わしいタイマー -> プレイヤーを探すためのタイマー
     [SerializeField] float inspectionTime = 3f;
-    private float inspectionTimer = 0f;
+    #endregion
 
+    #region Private Fields
     private Transform player;
     private NavMeshAgent agent;
     private Animator animator;
     private EnemyAttack enemyAttack;
 
-    // for animator
+    // タイマー
+    private float currentDetectTimer = 0f;
+    private float losePlayerTimer = 0f;
+    private float inspectionTimer = 0f;
+
+    // アニメーター用
     private float _velocity = 0f;
     private int _velocityHash;
     private int _isAttackingHash;
 
-    // animator variables (アニメーター変数)
-    const string ANIM_SPEED = "speed";
-    const string ANIM_ATTACKING = "isAttacking";
+    // アニメーター変数
+    private const string ANIM_SPEED = "speed";
+    private const string ANIM_ATTACKING = "isAttacking";
+    #endregion
 
     public EnemyState CurrentState => currentState;
-    #endregion
 
     void Start()
     {
@@ -92,7 +96,7 @@ public class EnemyController : MonoBehaviour
     /// パトロール可能な敵のためのパトロール行動。
     /// この機能は、敵が巡回し、プレイヤーを見ると追跡状態に設定します。
     /// </summary>
-    void PatrolBehaviour()
+    private void PatrolBehaviour()
     {
         if (!player) return;
 
@@ -115,7 +119,7 @@ public class EnemyController : MonoBehaviour
         else currentDetectTimer = Mathf.Max(0f, currentDetectTimer - Time.deltaTime);
     }
 
-    void ChasingBehaviour()
+    private void ChasingBehaviour()
     {
         if (enemyAttack.IsAttacking) return;
 
@@ -180,7 +184,7 @@ public class EnemyController : MonoBehaviour
     /// 3. 視野の間に障害物があるかどうか（レイキャストチェック）？
     /// いずれかの条件が偽の場合、プレイヤーは視界にいない
     /// </summary>
-    bool IsPlayerInSight()
+    private bool IsPlayerInSight()
     {
         Vector3 enemyPosition = transform.position;
         Vector3 dirToPlayer = (player.position - enemyPosition).normalized;
@@ -199,7 +203,7 @@ public class EnemyController : MonoBehaviour
     }
 
     // ** blend treeでの移動アニメーションを更新する **
-    void UpdateMoveAnimation()
+    private void UpdateMoveAnimation()
     {
         float targetVelocity;
 
@@ -212,7 +216,7 @@ public class EnemyController : MonoBehaviour
     }
 
     // 敵のlose条件を発生した後にこのスクリプトを無効化します。
-    void StopEnemyMovement()
+    private void StopEnemyMovement()
     {
         // stop enemy movement
         agent.isStopped = true;
@@ -221,7 +225,7 @@ public class EnemyController : MonoBehaviour
     }
 
     // 視覚的デバッグ目的のみ
-    void OnDrawGizmosSelected()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, viewRadius);
@@ -235,7 +239,7 @@ public class EnemyController : MonoBehaviour
     }
 
     // 視覚的デバッグ目的のみ
-    public Vector3 DirFromAngle(float angle, bool global)
+    private Vector3 DirFromAngle(float angle, bool global)
     {
         if (!global) angle += transform.eulerAngles.y;
         return new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad), 0, Mathf.Cos(angle * Mathf.Deg2Rad));

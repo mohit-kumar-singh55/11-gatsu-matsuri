@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// 敵の AI を制御するクラス
+/// </summary>
 [RequireComponent(typeof(EnemyController), typeof(EnemyPatrol))]
 public class EnemyAIManager : MonoBehaviour
 {

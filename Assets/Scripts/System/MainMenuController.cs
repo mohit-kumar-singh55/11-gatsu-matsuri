@@ -2,6 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// メインメニューの制御
+/// </summary>
 public class MainMenuController : MonoBehaviour
 {
     [SerializeField] GameObject fader;
@@ -11,7 +14,7 @@ public class MainMenuController : MonoBehaviour
     {
         faderImage = fader.GetComponent<Image>();
 
-        // *** hide cursor thoughout the game ***
+        // *** ゲーム中は常にカーソルを非表示にする ***
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -23,17 +26,25 @@ public class MainMenuController : MonoBehaviour
         if (SFXManager.Instance) SFXManager.Instance.PlayButtonClick();
     }
 
-    public void Quit() => Application.Quit();
+    public void Quit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
 
     void FadeOutScreen()
     {
         if (!fader || !faderImage) return;
 
         fader.SetActive(true);
-        StartCoroutine(SetColorAlphaValueAndVolume());
+        StartCoroutine(SetColorAlphaValue());
     }
 
-    IEnumerator SetColorAlphaValueAndVolume()
+    // 画面をフェードアウトさせる
+    IEnumerator SetColorAlphaValue()
     {
         while (faderImage.color.a < 1f)
         {

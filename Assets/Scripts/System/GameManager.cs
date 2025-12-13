@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// Singleton Class
+/// <summary>
+/// ゲーム全体を管理するクラス
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    #region Private Fields
     private UIManager uiManager;
     private PlayerController playerController;
     private bool gameEnded = false;
@@ -18,6 +21,7 @@ public class GameManager : MonoBehaviour
     // cheat keys
     private readonly KeyCode cheatKeyNextLevel = KeyCode.L;
     private readonly KeyCode cheatKeyInfiniteJump = KeyCode.J;
+    #endregion
 
     private void Awake()
     {
@@ -59,19 +63,19 @@ public class GameManager : MonoBehaviour
 
     public void SetHasKey(bool value) => hasKey = value;
 
-    // only when timer runs out
+    // タイマーが切れたときのみ
     public void TriggerLose()
     {
         if (gameEnded) return;
         gameEnded = true;
 
-        // saving current level index for reloading
+        // リロード用に現在のレベルインデックスを保存する
         PlayerPrefs.SetInt(PLAYERPREFKEYS.LEVEL_TO_RESTART, SceneManager.GetActiveScene().buildIndex);
         // PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 1);
         SceneLoader.LoadScene(SCENES.GAME_OVER);
     }
 
-    // only when reaching the goal with the key
+    // キーを持った状態でゴールに到達したときのみ
     public void TriggerWin()
     {
         if (!hasKey) return;
@@ -83,11 +87,12 @@ public class GameManager : MonoBehaviour
         SceneLoader.LoadScene(SCENES.GAME_CLEAR);
     }
 
+    // 落下によるリスタート
     public void ReloadCurrentLevelWhenFall()
     {
         Instance = null;
 
-        // not to reset the timer when restarting level by falling
+        // 落下によるリスタート時にはタイマーをリセットしないため
         // PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 0);
         // if (CountdownTimer.Instance) PlayerPrefs.SetFloat(PLAYERPREFKEYS.TIMER_TO_START_FROM, CountdownTimer.Instance.CurrentTime);
         SceneLoader.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -114,5 +119,12 @@ public class GameManager : MonoBehaviour
         SceneLoader.LoadScene(SCENES.MAIN_MENU);
     }
 
-    public void QuitGame() => Application.Quit();
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
 }

@@ -3,6 +3,9 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// プレイヤー入力、移動、ジャンプ、スタミナ管理など、プレイヤー関連の各種処理を担当するクラス
+/// </summary>
 [RequireComponent(typeof(Rigidbody), typeof(PlayerInput), typeof(Animator))]
 [RequireComponent(typeof(RagdollEnabler), typeof(Collider))]
 public class PlayerController : MonoBehaviour
@@ -37,11 +40,11 @@ public class PlayerController : MonoBehaviour
     private Collider col;
     private Vector2 moveInput;
     private UIManager uiManager;
-    private ObjectPropogator currentPlatform;    // ** stuff to make player move with platform and not slide off **
+    private ObjectPropogator currentPlatform;    // ** プレイヤーがプラットフォームと一緒に動くようにするためのもの **
     // private CameraController cameraController;
     private bool isIdle = false;
     private bool isSprinting = false;
-    private bool playerFreezed = false;      // to freeze player while game over
+    private bool playerFreezed = false;      // 攻撃を受けている間、プレイヤーを停止させるため
     private float _velocity = 0f;
     private float _curStamina;
     private int _velocityHash;
@@ -50,15 +53,16 @@ public class PlayerController : MonoBehaviour
     private bool _freezeStamina = false;
     private bool _infiniteJump = false;
 
-    public ObjectPropogator CurrentPlatform { set => currentPlatform = value; }   // ** stuff to make player move with platform and not slide off **
+    public ObjectPropogator CurrentPlatform { set => currentPlatform = value; }   // ** プレイヤーがプラットフォームと一緒に動くようにするためのもの **
     public bool FreezeStamina { get => _freezeStamina; set => _freezeStamina = value; }
 
-    // animator variables (アニメーター変数)
+    // アニメーター変数
     const string ANIM_SPEED = "Velocity";
     const string ANIM_STANDING_JUMP = "StandingJump";
     const string ANIM_RUNNING_JUMP = "RunningJump";
     #endregion
 
+    #region Unity Callbacks
     void Awake()
     {
         // ** singleton **
@@ -77,11 +81,11 @@ public class PlayerController : MonoBehaviour
         col = GetComponent<Collider>();
         // cameraController = GetComponent<CameraController>();
 
-        // ** hiding cursor (カーソルを隠す) **
+        // ** カーソルを隠す **
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        // ** initializing (初期化) **
+        // ** 初期化 **
         _curStamina = staminaInSeconds;
     }
 
@@ -93,56 +97,52 @@ public class PlayerController : MonoBehaviour
 
         uiManager = UIManager.Instance;
 
-        // disable ragdoll at start
+        // 開始時に ragdoll を無効化する
         EnableRagdoll(false);
     }
 
     void Update()
     {
         if (rb.linearVelocity == Vector3.zero || rb.linearVelocity.magnitude < .05f) isIdle = true;
-        else if (currentPlatform != null && moveInput == Vector2.zero) isIdle = true;   // to stop animation while on moving platform and not moving
+        else if (currentPlatform != null && moveInput == Vector2.zero) isIdle = true;   // 移動床上で静止している間はアニメーションを停止するため
         else isIdle = false;
     }
 
     void FixedUpdate()
     {
         HandleMove();
-        // ** stuff to make player move with moving platform and not slide off **
+        // ** プレイヤーがプラットフォームと一緒に動くようにするためのもの **
         if (currentPlatform != null) rb.linearVelocity += currentPlatform.PlatformVelocity;
 
         if (useStamina) HandleStamina();
     }
+    #endregion
 
-    // ** Input System - Callbacks (入力システム - コールバック) **
-    public void OnMove(InputValue value)
+    #region Input Callbacks
+    // ** 入力システム - コールバック **
+    private void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
     }
 
-    public void OnJump(InputValue value)
+    private void OnJump(InputValue value)
     {
         HandleJump();
     }
 
-    public void OnSprint(InputValue value)
+    private void OnSprint(InputValue value)
     {
         isSprinting = value.Get<float>() == 1f;
     }
+    #endregion
 
-    // ** freeze player movements and animations (プレイヤーの動きを止める) **
-    public void FreezePlayer(bool freeze = true)
-    {
-        playerFreezed = freeze;
-        rb.linearVelocity = Vector3.zero;
-        UpdateMoveAnimation();
-    }
-
-    // ** handling player movements (プレイヤーの動きを制御する) **
-    void HandleMove()
+    #region Private Methods
+    // ** プレイヤーの動きを制御する **
+    private void HandleMove()
     {
         if (playerFreezed) return;
 
-        // Flatten the camera's forward and right (カメラの前方と右方向を平面化)
+        // ** カメラの前方と右方向を平面化 **
         Vector3 camForward = cm_cam.transform.forward;
         camForward.y = 0;
         camForward.Normalize();
@@ -151,18 +151,18 @@ public class PlayerController : MonoBehaviour
         camRight.y = 0;
         camRight.Normalize();
 
-        // ** Calculate movement direction (移動方向を計算) **
+        // ** 移動方向を計算 **
         Vector3 move = camRight * moveInput.x + camForward * moveInput.y;
-        move.Normalize();           // Prevent faster diagonal movement (斜め移動を防ぐ)
+        move.Normalize();
 
-        // Rotate player to face movement direction (プレイヤーを移動方向に向ける)
+        // ** プレイヤーを移動方向に向ける **
         if (move != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(move);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.fixedDeltaTime);
         }
 
-        // ** moving player (プレイヤーを移動させる) **
+        // ** プレイヤーを移動させる **
         bool canSprint = isSprinting && _curStamina > 0f;
         Vector3 targetVelocity = move * (canSprint ? sprintSpeed : walkSpeed);
         Vector3 velocityChange = targetVelocity - rb.linearVelocity;
@@ -170,11 +170,12 @@ public class PlayerController : MonoBehaviour
 
         rb.AddForce(velocityChange, ForceMode.VelocityChange);
 
+        // ** 移動アニメーションを更新する **
         UpdateMoveAnimation();
     }
 
-    // ** updating move animation in blend tree (移動アニメーションを更新する) **
-    void UpdateMoveAnimation()
+    // ** blend treeでの移動アニメーションを更新する **
+    private void UpdateMoveAnimation()
     {
         float targetVelocity;
 
@@ -186,9 +187,7 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat(_velocityHash, _velocity);
     }
 
-    public void ToggleInfiniteJump() => _infiniteJump = !_infiniteJump;
-
-    void HandleJump()
+    private void HandleJump()
     {
         if ((IsGrounded() && !playerFreezed) || _infiniteJump)
         {
@@ -199,27 +198,42 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    bool IsGrounded() => Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
+    private bool IsGrounded() => Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
 
-    void HandleStamina()
+    private void HandleStamina()
     {
         if ((!isSprinting && _curStamina >= staminaInSeconds) || _freezeStamina) return;
 
+        // スタミナ演算
         if (isSprinting && moveInput != Vector2.zero) _curStamina -= Time.deltaTime;
         else _curStamina += staminaInSeconds / timeToRegenerateStamina * Time.deltaTime;
 
         _curStamina = Mathf.Clamp(_curStamina, 0f, staminaInSeconds);
 
-        // update stamina UI
+        // UI更新
         uiManager.SetStaminaImage(_curStamina, staminaInSeconds);
+    }
+    #endregion
+
+    #region Public Methods
+    // 無限ジャンプ
+    public void ToggleInfiniteJump() => _infiniteJump = !_infiniteJump;
+
+    // ** プレイヤーの動きを止める **
+    public void FreezePlayer(bool freeze = true)
+    {
+        playerFreezed = freeze;
+        rb.linearVelocity = Vector3.zero;
+        UpdateMoveAnimation();
     }
 
     public void EnableRagdoll(bool enable = true)
     {
-        col.enabled = !enable;    // disable main collider when ragdoll is enabled
-        rb.isKinematic = enable;   // disable main rigidbody when ragdoll is enabled
+        col.enabled = !enable;    // ragdoll 有効時にメインのコライダーを無効化する
+        rb.isKinematic = enable;   // ragdoll 有効時にメインのリジットベリティを無効化する
         ragdollEnabler.EnableRagdoll(enable);
 
+        // ライトを無効化
         if (topDownLight) topDownLight.SetActive(!enable);
     }
 
@@ -256,7 +270,9 @@ public class PlayerController : MonoBehaviour
 
         StartCoroutine(ResetJumpForce(duration, originalJumptPower));
     }
+    #endregion
 
+    #region Coroutines
     // ** Coroutines **
     private IEnumerator RestartStaminaDepletion(float delay)
     {
@@ -291,4 +307,5 @@ public class PlayerController : MonoBehaviour
 
         uiManager.ShowStaminaDownUI(false);
     }
+    #endregion
 }

@@ -1,6 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// 敵の攻撃を制御するクラス
+/// </summary>
 [RequireComponent(typeof(Animator))]
 public class EnemyAttack : MonoBehaviour
 {

@@ -1,6 +1,9 @@
 using Unity.Cinemachine;
 using UnityEngine;
 
+/// <summary>
+/// カメラの切り替えと衝動の制御するクラス
+/// </summary>
 [RequireComponent(typeof(CinemachineImpulseSource))]
 public class CameraController : MonoBehaviour
 {
@@ -34,7 +37,6 @@ public class CameraController : MonoBehaviour
         followCam.gameObject.SetActive(!show);
     }
 
-    // Impulse when getting attacked
     // 攻撃を受けたときの衝動
     public void ScreenShake() => impulseSource.GenerateImpulse(20f);
 }

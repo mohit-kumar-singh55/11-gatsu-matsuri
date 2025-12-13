@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class SpeedUp : MonoBehaviour, IInteractable
 {
+    #region Serialize Fields
     [Header("速度アップ設定")]
     [Tooltip("速度の倍率")]
     [SerializeField] private float multipleOfSpeed = 1.3f;
@@ -16,6 +17,7 @@ public class SpeedUp : MonoBehaviour, IInteractable
     [SerializeField] private string notificationText = "Speed Up!";
     [Tooltip("通知表示時間")]
     [SerializeField] private float notificationDuration = 2f;
+    #endregion
 
     public void OnInteract(PlayerController player = null)
     {
@@ -23,13 +25,16 @@ public class SpeedUp : MonoBehaviour, IInteractable
 
         bool isSpeedUp = multipleOfSpeed > 1f;
 
+        // UI更新
         if (isSpeedUp) UIManager.Instance.ShowSpeedUpUI(true);
         else UIManager.Instance.ShowSpeedDownUI(true);
 
         UIManager.Instance.ShowNotification(notificationText, notificationDuration);
 
+        // プレイヤーの速度を変更
         player.ChangeBothSpeedForSomeTime(multipleOfSpeed, speedUpDuration, isSpeedUp);
 
+        // エフェクト
         if (effectPrefab) Instantiate(effectPrefab, transform.position, Quaternion.identity);
 
         Destroy(gameObject);

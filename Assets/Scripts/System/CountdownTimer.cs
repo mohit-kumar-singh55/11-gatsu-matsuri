@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// タイマーを管理するクラス
+/// </summary>
 public class CountdownTimer : MonoBehaviour
 {
     public static CountdownTimer Instance { get; private set; }
@@ -48,12 +51,13 @@ public class CountdownTimer : MonoBehaviour
         int minutes = Mathf.FloorToInt(currentTime / 60);
         int seconds = Mathf.FloorToInt(currentTime % 60);
 
+        // UI更新
         uiManager.SetTimerText(minutes, seconds);
     }
 
     public void IncreaseTime(float amount) => currentTime += amount;
 
-    // ** タイマーをリセットするか、保存された時間から開始するかを確認 **
+    // ** タイマーをリセットするか、保存された時間から開始するかの確認 **
     public void CheckIfReset()
     {
         if (PlayerPrefs.GetInt(PLAYERPREFKEYS.RESET_TIMER, 1) == 1) currentTime = startTime;

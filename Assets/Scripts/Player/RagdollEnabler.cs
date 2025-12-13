@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// ragdoll の有効／無効を切り替える
+/// </summary>
 public class RagdollEnabler : MonoBehaviour
 {
     [SerializeField] private Animator Animator;
@@ -19,7 +22,7 @@ public class RagdollEnabler : MonoBehaviour
 
     public void EnableRagdoll(bool enable = true)
     {
-        Animator.enabled = !enable;     // animator and ragdoll can't work together
+        Animator.enabled = !enable;     // Animator とラグドールは同時に動作できない
 
         foreach (CharacterJoint joint in Joints) joint.enableCollision = enable;
         foreach (Collider collider in Colliders) collider.isTrigger = !enable;

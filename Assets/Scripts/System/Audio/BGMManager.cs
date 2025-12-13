@@ -1,10 +1,14 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// BGM を管理するクラス
+/// </summary>
 public class BGMManager : MonoBehaviour
 {
     public static BGMManager Instance { get; private set; }
 
+    #region Serialize Fields
     [SerializeField] AudioSource bgmSource;
     [Tooltip("MainMenu, Level1, Level2 BGM")]
     [SerializeField] AudioClip mainMenuBGM; // Menu–Level2
@@ -12,6 +16,7 @@ public class BGMManager : MonoBehaviour
     [SerializeField] AudioClip level3BGM; // Level3
     [Tooltip("Game Over BGM")]
     [SerializeField] AudioClip gameOverBGM; // game over
+    #endregion
 
     void Awake()
     {
@@ -34,7 +39,7 @@ public class BGMManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Changing BGM depending on scene (シーンに応じてBGMを変更)
+        // シーンに応じてBGMを変更
         int sceneIndex = scene.buildIndex;
 
         if (sceneIndex <= SCENES.LEVEL_2) PlayBGM(mainMenuBGM);
@@ -45,7 +50,7 @@ public class BGMManager : MonoBehaviour
     void PlayBGM(AudioClip clip, bool loop = true)
     {
         if (bgmSource.clip == clip && bgmSource.isPlaying)
-            return; // Already playing correct BGM (すでに正しいBGMが再生されている)
+            return; // すでに正しいBGMが再生されている
 
         bgmSource.clip = clip;
         bgmSource.loop = loop;

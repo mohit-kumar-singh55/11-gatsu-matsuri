@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// プレイヤーの衝突処理
+/// </summary>
 public class PlayerCollisionHandler : MonoBehaviour
 {
     private PlayerController playerController;

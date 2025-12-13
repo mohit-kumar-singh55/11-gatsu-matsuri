@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// 敵の手の衝突判定
+/// </summary>
 [RequireComponent(typeof(Collider))]
 public class EnemyAttackHandCollision : MonoBehaviour
 {
@@ -9,6 +12,7 @@ public class EnemyAttackHandCollision : MonoBehaviour
 
     void Start()
     {
+        // initialize
         col = GetComponent<Collider>();
         enemyAttack = GetComponentInParent<EnemyAttack>();
         playerController = PlayerController.Instance;
@@ -21,10 +25,10 @@ public class EnemyAttackHandCollision : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // activate ragdoll
+        // ragdoll を有効化する
         playerController.EnableRagdoll();
 
-        // apply force
+        // 力を与える
         Vector3 punchForce = (other.transform.position - transform.position).normalized * 500;
         other.GetComponent<Rigidbody>().AddForceAtPosition(punchForce, other.ClosestPoint(transform.position), ForceMode.Impulse);
     }

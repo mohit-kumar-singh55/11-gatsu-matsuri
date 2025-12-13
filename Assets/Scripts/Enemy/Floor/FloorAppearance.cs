@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// プレイヤーの有無に応じて床オブジェクトの表示／非表示を制御するクラス
+/// </summary>
 public class FloorAppearance : MonoBehaviour
 {
     [Tooltip("もしtrueならプレイヤーがトリガー内にいるときに床が表示され、falseなら非表示になります。")]

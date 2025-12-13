@@ -2,8 +2,12 @@ using UnityEngine;
 
 enum ObjectPropogatorAxis { X, Y, Z };
 
+/// <summary>
+/// オブジェクトを特定の方向へ移動させるクラス
+/// </summary>
 public class ObjectPropogator : MonoBehaviour
 {
+    #region Serialized Fields
     [Tooltip("1秒間の振動回数")]
     [SerializeField] float speed = 1f;     // Oscillations per second (frequency)
     [Tooltip("中心からの最大オフセット距離")]
@@ -12,7 +16,9 @@ public class ObjectPropogator : MonoBehaviour
     [SerializeField] float startAfterSeconds = 0;
     [Tooltip("動く軸")]
     [SerializeField] ObjectPropogatorAxis axis = ObjectPropogatorAxis.Y;
+    #endregion
 
+    #region Private Fields
     private Vector3 startPos;
     private Vector3 direction;
     private float timer = 0f;
@@ -20,6 +26,7 @@ public class ObjectPropogator : MonoBehaviour
     // ** プレイヤーがプラットフォームと一緒に動くようにするためのもの **
     private Vector3 lastPos;
     private Vector3 platformVelocity;
+    #endregion
 
     public Vector3 PlatformVelocity => platformVelocity;
 

@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// レベル終了判定
+/// </summary>
 public class LevelFinishDetector : MonoBehaviour
 {
     [SerializeField] bool isLastLevel = false;

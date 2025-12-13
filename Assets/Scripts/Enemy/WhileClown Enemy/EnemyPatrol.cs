@@ -2,13 +2,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// 敵の移動を制御し、各ウェイポイントで一定時間待機しながら次の地点へ移動させるクラス
+/// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyPatrol : MonoBehaviour
 {
     [SerializeField] Transform waypointParent;
     [SerializeField] float waitTimeAtWaypoint = 2f;
 
-    private List<Transform> waypoints = new();
+    private readonly List<Transform> waypoints = new();
     private int currentWaypointIndex = 0;
     private NavMeshAgent agent;
     private float waitTimer = 0f;
@@ -68,7 +71,7 @@ public class EnemyPatrol : MonoBehaviour
         currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count;
     }
 
-    // for visual debugging purpose only
+    // 視覚的デバッグ目的のみ
     // void OnDrawGizmosSelected()
     // {
     //     if (waypoints == null) return;
