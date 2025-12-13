@@ -1695,7 +1695,7 @@ MonoBehaviour:
   m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_DeselectOnBackgroundClick: 1
+  m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
@@ -1711,7 +1711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 527034731}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &201296806
@@ -2742,6 +2742,11 @@ PrefabInstance:
 --- !u!1 &527034730 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2903076296840477626, guid: 819cd79437abcb742bf053200afc7c29, type: 3}
+  m_PrefabInstance: {fileID: 527034729}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &527034731 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4576479860543298101, guid: 819cd79437abcb742bf053200afc7c29, type: 3}
   m_PrefabInstance: {fileID: 527034729}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &536365939
@@ -10023,10 +10028,10 @@ SceneRoots:
   - {fileID: 927196089}
   - {fileID: 1656891888}
   - {fileID: 527034729}
+  - {fileID: 201296806}
   - {fileID: 586867126}
   - {fileID: 4586821183934995517}
   - {fileID: 5939829916111682010}
-  - {fileID: 201296806}
   - {fileID: 1825272716}
   - {fileID: 1796395485}
   - {fileID: 317665496}

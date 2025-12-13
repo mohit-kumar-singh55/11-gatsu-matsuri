@@ -29,8 +29,6 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         // DontDestroyOnLoad(gameObject);
-
-        ShowCursor(false);
     }
 
     void Start()
@@ -57,7 +55,6 @@ public class GameManager : MonoBehaviour
         pauseMenuActive = !pauseMenuActive;
         uiManager.ShowPauseMenu(pauseMenuActive);
         Time.timeScale = pauseMenuActive ? 0 : 1;
-        ShowCursor(pauseMenuActive);
     }
 
     public void SetHasKey(bool value) => hasKey = value;
@@ -66,13 +63,11 @@ public class GameManager : MonoBehaviour
     public void TriggerLose()
     {
         if (gameEnded) return;
-
         gameEnded = true;
 
         // saving current level index for reloading
         PlayerPrefs.SetInt(PLAYERPREFKEYS.LEVEL_TO_RESTART, SceneManager.GetActiveScene().buildIndex);
         // PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 1);
-        GameOverSequence();
         SceneLoader.LoadScene(SCENES.GAME_OVER);
     }
 
@@ -80,27 +75,12 @@ public class GameManager : MonoBehaviour
     public void TriggerWin()
     {
         if (!hasKey) return;
-
         if (gameEnded) return;
 
         gameEnded = true;
 
         // PlayerPrefs.SetInt(PLAYERPREFKEYS.RESET_TIMER, 1);
-        GameOverSequence();
         SceneLoader.LoadScene(SCENES.GAME_CLEAR);
-    }
-
-    public void GameOverSequence()
-    {
-        ShowCursor(true);
-        // Timer.Instance.StopTimer(true);
-        // AudioManager.Instance.StopAllAudios(true);
-    }
-
-    void ShowCursor(bool show = true)
-    {
-        Cursor.lockState = show ? CursorLockMode.None : CursorLockMode.Locked;
-        Cursor.visible = show;
     }
 
     public void ReloadCurrentLevelWhenFall()

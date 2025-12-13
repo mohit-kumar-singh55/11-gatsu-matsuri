@@ -10,6 +10,10 @@ public class MainMenuController : MonoBehaviour
     void Start()
     {
         faderImage = fader.GetComponent<Image>();
+
+        // *** hide cursor thoughout the game ***
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void LoadNewGame()

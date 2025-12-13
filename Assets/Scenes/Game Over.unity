@@ -534,7 +534,7 @@ MonoBehaviour:
   m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_DeselectOnBackgroundClick: 1
+  m_DeselectOnBackgroundClick: 0
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
@@ -550,7 +550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventSystem
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 9099959983271940452}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &1973988068
@@ -673,14 +673,19 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d4a0f75b9be5a64cb674da956eb0727, type: 3}
+--- !u!1 &9099959983271940452 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5943372690202202111, guid: 2d4a0f75b9be5a64cb674da956eb0727, type: 3}
+  m_PrefabInstance: {fileID: 9099959983271940450}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1381816518}
   - {fileID: 790868900}
-  - {fileID: 1973988068}
   - {fileID: 709846736}
   - {fileID: 9099959983271940450}
+  - {fileID: 1973988068}
   - {fileID: 748800004}
   - {fileID: 924888414}
