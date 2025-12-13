@@ -6,21 +6,21 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class EnemyAttackHandCollision : MonoBehaviour
 {
-    private Collider col;
-    private EnemyAttack enemyAttack;
+    private Collider _col;
+    private EnemyAttack __playerController;
     private PlayerController playerController;
 
     void Start()
     {
         // initialize
-        col = GetComponent<Collider>();
-        enemyAttack = GetComponentInParent<EnemyAttack>();
+        _col = GetComponent<Collider>();
+        __playerController = GetComponentInParent<EnemyAttack>();
         playerController = PlayerController.Instance;
     }
 
     void FixedUpdate()
     {
-        if (enemyAttack.IsAttacking) col.enabled = true;
+        if (__playerController.IsAttacking) _col.enabled = true;
     }
 
     void OnTriggerEnter(Collider other)

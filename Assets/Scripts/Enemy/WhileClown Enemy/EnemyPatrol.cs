@@ -11,11 +11,11 @@ public class EnemyPatrol : MonoBehaviour
     [SerializeField] Transform waypointParent;
     [SerializeField] float waitTimeAtWaypoint = 2f;
 
-    private readonly List<Transform> waypoints = new();
-    private int currentWaypointIndex = 0;
-    private NavMeshAgent agent;
-    private float waitTimer = 0f;
-    private bool waiting = false;
+    private readonly List<Transform> _waypoints = new();
+    private int _currentWaypointIndex = 0;
+    private NavMeshAgent _agent;
+    private float _waitTimer = 0f;
+    private bool _waiting = false;
 
     void Awake()
     {
@@ -26,11 +26,11 @@ public class EnemyPatrol : MonoBehaviour
             return;
         }
 
-        // waypointsを一度にキャッシュ
-        foreach (Transform child in waypointParent) waypoints.Add(child);
+        // _waypointsを一度にキャッシュ
+        foreach (Transform child in waypointParent) _waypoints.Add(child);
 
         // Initialize
-        agent = GetComponent<NavMeshAgent>();
+        _agent = GetComponent<NavMeshAgent>();
     }
 
     void Start()
@@ -40,23 +40,23 @@ public class EnemyPatrol : MonoBehaviour
 
     void Update()
     {
-        // agentがwaypointに到達していない場合、またはウwaypointsが割り当てられていない場合は、何もしない。
-        if (agent.pathPending || waypoints?.Count == 0) return;
+        // _agentがwaypointに到達していない場合、またはウ_waypointsが割り当てられていない場合は、何もしない。
+        if (_agent.pathPending || _waypoints?.Count == 0) return;
 
         // waypointに待機
-        if (!waiting && agent.remainingDistance <= agent.stoppingDistance)
+        if (!_waiting && _agent.remainingDistance <= _agent.stoppingDistance)
         {
-            waiting = true;
-            waitTimer = waitTimeAtWaypoint;
+            _waiting = true;
+            _waitTimer = waitTimeAtWaypoint;
         }
 
         // 待機中ならタイマーを減らして、タイマーが終わったら次のwaypointに行く
-        if (waiting)
+        if (_waiting)
         {
-            waitTimer -= Time.deltaTime;
-            if (waitTimer <= 0f)
+            _waitTimer -= Time.deltaTime;
+            if (_waitTimer <= 0f)
             {
-                waiting = false;
+                _waiting = false;
                 GoToNextWaypoint();
             }
         }
@@ -65,25 +65,25 @@ public class EnemyPatrol : MonoBehaviour
     // 次のwaypointに行く
     void GoToNextWaypoint()
     {
-        if (waypoints.Count == 0) return;
+        if (_waypoints.Count == 0) return;
 
-        agent.SetDestination(waypoints[currentWaypointIndex].position);
-        currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count;
+        _agent.SetDestination(_waypoints[_currentWaypointIndex].position);
+        _currentWaypointIndex = (_currentWaypointIndex + 1) % _waypoints.Count;
     }
 
     // 視覚的デバッグ目的のみ
     // void OnDrawGizmosSelected()
     // {
-    //     if (waypoints == null) return;
+    //     if (_waypoints == null) return;
 
     //     Gizmos.color = Color.green;
-    //     for (int i = 0; i < waypoints.Length; i++)
+    //     for (int i = 0; i < _waypoints.Length; i++)
     //     {
-    //         Vector3 wp = waypoints[i].position;
+    //         Vector3 wp = _waypoints[i].position;
     //         Gizmos.DrawSphere(wp, 0.2f);
 
-    //         if (i < waypoints.Length - 1)
-    //             Gizmos.DrawLine(wp, waypoints[i + 1].position);
+    //         if (i < _waypoints.Length - 1)
+    //             Gizmos.DrawLine(wp, _waypoints[i + 1].position);
     //     }
     // }
 }

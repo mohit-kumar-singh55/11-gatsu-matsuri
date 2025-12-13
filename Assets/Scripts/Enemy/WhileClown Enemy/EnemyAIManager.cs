@@ -6,25 +6,25 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyController), typeof(EnemyPatrol))]
 public class EnemyAIManager : MonoBehaviour
 {
-    private EnemyController enemy;
-    private EnemyPatrol patrol;
+    private EnemyController _enemy;
+    private EnemyPatrol _patrol;
 
     private void Awake()
     {
-        enemy = GetComponent<EnemyController>();
-        patrol = GetComponent<EnemyPatrol>();
+        _enemy = GetComponent<EnemyController>();
+        _patrol = GetComponent<EnemyPatrol>();
     }
 
     void Update()
     {
         // 敵の現在の状態に基づいて敵の行動を制御
-        switch (enemy.CurrentState)
+        switch (_enemy.CurrentState)
         {
             case EnemyState.Patrol:
-                patrol.enabled = true;
+                _patrol.enabled = true;
                 break;
             case EnemyState.Chasing:
-                patrol.enabled = false;
+                _patrol.enabled = false;
                 break;
         }
     }

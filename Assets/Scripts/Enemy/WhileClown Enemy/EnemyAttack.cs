@@ -7,9 +7,9 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class EnemyAttack : MonoBehaviour
 {
-    private Animator animator;
-    private PlayerController playerController;
-    private CameraController cameraController;
+    private Animator _animator;
+    private PlayerController _playerController;
+    private CameraController _cameraController;
 
     private bool isAttacking = false;
 
@@ -21,9 +21,9 @@ public class EnemyAttack : MonoBehaviour
     void Start()
     {
         // initialize
-        animator = GetComponent<Animator>();
-        cameraController = CameraController.Instance;
-        playerController = PlayerController.Instance;
+        _animator = GetComponent<Animator>();
+        _cameraController = CameraController.Instance;
+        _playerController = PlayerController.Instance;
     }
 
     // 敵の攻撃
@@ -38,29 +38,29 @@ public class EnemyAttack : MonoBehaviour
     IEnumerator PlayAttackSequence(int attackAnimHash)
     {
         // ** 1: プレイヤーを完全に止める **
-        playerController.FreezePlayer(true);
-        playerController.enabled = false;
+        _playerController.FreezePlayer(true);
+        _playerController.enabled = false;
 
         // ** 2: cinematic カメラに切り替える **
-        cameraController.ShowCinematicCam(true);
+        _cameraController.ShowCinematicCam(true);
 
         // ** 3: 時間を遅くする **
         Time.timeScale = 0.15f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
         // ** 4: 攻撃アニメション **
-        animator.SetTrigger(attackAnimHash);
+        _animator.SetTrigger(attackAnimHash);
 
         // ** 5: 攻撃アニメションが終わるまで待つ **
         yield return new WaitForSecondsRealtime(attackCinematicDuration);
 
         // 画面を揺らす
-        cameraController.ScreenShake();
+        _cameraController.ScreenShake();
 
         // ** 6: 全てを元に戻す **
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f;
-        cameraController.ShowCinematicCam(false);
+        _cameraController.ShowCinematicCam(false);
         isAttacking = false;
 
         // リスタートする前に、ちょっと待つ

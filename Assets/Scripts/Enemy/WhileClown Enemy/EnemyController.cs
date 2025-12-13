@@ -41,15 +41,15 @@ public class EnemyController : MonoBehaviour
     #endregion
 
     #region Private Fields
-    private Transform player;
-    private NavMeshAgent agent;
-    private Animator animator;
-    private EnemyAttack enemyAttack;
+    private Transform _player;
+    private NavMeshAgent _agent;
+    private Animator _animator;
+    private EnemyAttack _enemyAttack;
 
     // タイマー
-    private float currentDetectTimer = 0f;
-    private float losePlayerTimer = 0f;
-    private float inspectionTimer = 0f;
+    private float _currentDetectTimer = 0f;
+    private float _losePlayerTimer = 0f;
+    private float _inspectionTimer = 0f;
 
     // アニメーター用
     private float _velocity = 0f;
@@ -66,10 +66,10 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         // initialize
-        player = FindAnyObjectByType<PlayerController>().gameObject.transform;
-        agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
-        enemyAttack = GetComponent<EnemyAttack>();
+        _player = FindAnyObjectByType<PlayerController>().gameObject.transform;
+        _agent = GetComponent<NavMeshAgent>();
+        _animator = GetComponent<Animator>();
+        _enemyAttack = GetComponent<EnemyAttack>();
 
         _velocityHash = Animator.StringToHash(ANIM_SPEED);
         _isAttackingHash = Animator.StringToHash(ANIM_ATTACKING);
@@ -99,38 +99,38 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     private void PatrolBehaviour()
     {
-        if (!player) return;
+        if (!_player) return;
 
         // 敵を動かす
-        agent.speed = walkSpeed;
-        agent.isStopped = false;
+        _agent.speed = walkSpeed;
+        _agent.isStopped = false;
 
         // ** プレイヤーが視界に入っていない場合 **
         if (!IsPlayerInSight())
         {
-            currentDetectTimer = Mathf.Max(0f, currentDetectTimer - Time.deltaTime);
+            _currentDetectTimer = Mathf.Max(0f, _currentDetectTimer - Time.deltaTime);
             return;
         }
 
         // ** プレイヤーが視界にいる場合 **
-        currentDetectTimer += Time.deltaTime;
+        _currentDetectTimer += Time.deltaTime;
 
-        if (currentDetectTimer >= detectionTime)
+        if (_currentDetectTimer >= detectionTime)
         {
             // 敵の状態を追跡に変更
             currentState = EnemyState.Chasing;
-            agent.SetDestination(player.position);
+            _agent.SetDestination(_player.position);
             // Debug.Log("❗ PLAYER DETECTED! CHASING...");
         }
     }
 
     private void ChasingBehaviour()
     {
-        if (enemyAttack.IsAttacking) return;
+        if (_enemyAttack.IsAttacking) return;
 
         // プレイヤーを追いかける 
-        agent.speed = chaseSpeed;
-        agent.SetDestination(player.position);
+        _agent.speed = chaseSpeed;
+        _agent.SetDestination(_player.position);
 
         // ** プレイヤーが視界にいる場合 **
         if (IsPlayerInSight())
@@ -147,7 +147,7 @@ public class EnemyController : MonoBehaviour
     private void CheckDistanceAndAttack()
     {
         // 敵からプレイヤーまでの距離
-        float distToPlayer = Vector3.Distance(transform.position, player.position);
+        float distToPlayer = Vector3.Distance(transform.position, _player.position);
 
         // ********** Attack **********
         // プレイヤーが十分に近い場合に攻撃する
@@ -155,38 +155,38 @@ public class EnemyController : MonoBehaviour
         {
             // 敵を完全に止めて、攻撃する
             StopEnemyMovement();
-            enemyAttack.Attack(_isAttackingHash);       // 攻撃
-            // Debug.Log("🗡️ Attacking player");
+            _enemyAttack.Attack(_isAttackingHash);       // 攻撃
+            // Debug.Log("🗡️ Attacking _player");
         }
-        else agent.isStopped = false;
+        else _agent.isStopped = false;
 
         // タイマーをリセット
-        losePlayerTimer = losePlayerTime;
-        inspectionTimer = inspectionTime;
+        _losePlayerTimer = losePlayerTime;
+        _inspectionTimer = inspectionTime;
     }
 
     // 追跡中、プレイヤーが視界から外れた場合
     private void SearchPlayer()
     {
         // プレイヤーを失った場合、タイマーの更新
-        losePlayerTimer -= Time.deltaTime;
+        _losePlayerTimer -= Time.deltaTime;
 
         // プレイヤーが失ったら、検査する
-        if (losePlayerTimer < 0)
+        if (_losePlayerTimer < 0)
         {
             // 敵を止めて、検査中アニメーションを再生する
-            agent.isStopped = true;
+            _agent.isStopped = true;
             // Debug.Log("🔍 Inspecting the place");
 
             // 検査時間を減らす
-            inspectionTimer -= Time.deltaTime;
+            _inspectionTimer -= Time.deltaTime;
 
             // 検査が終了し、プレイヤーが失われた場合、巡回状態に戻る
-            if (inspectionTimer <= 0)
+            if (_inspectionTimer <= 0)
             {
-                agent.isStopped = false;
+                _agent.isStopped = false;
                 currentState = EnemyState.Patrol;
-                // Debug.Log("👁️ Lost player. Returning to patrol.");
+                // Debug.Log("👁️ Lost _player. Returning to patrol.");
             }
         }
     }
@@ -196,8 +196,8 @@ public class EnemyController : MonoBehaviour
     {
         // ** プレイヤーは視野半径内にいるかどうか **
         Vector3 enemyPosition = transform.position;
-        Vector3 dirToPlayer = (player.position - enemyPosition).normalized;
-        float distToPlayer = Vector3.Distance(enemyPosition, player.position);
+        Vector3 dirToPlayer = (_player.position - enemyPosition).normalized;
+        float distToPlayer = Vector3.Distance(enemyPosition, _player.position);
 
         // 視野半径内にプレイヤーがいない場合
         if (distToPlayer > viewRadius) return false;
@@ -217,19 +217,19 @@ public class EnemyController : MonoBehaviour
     {
         float targetVelocity;
 
-        if (agent.velocity == Vector3.zero) targetVelocity = 0f;
-        else targetVelocity = agent.velocity.magnitude / chaseSpeed;
+        if (_agent.velocity == Vector3.zero) targetVelocity = 0f;
+        else targetVelocity = _agent.velocity.magnitude / chaseSpeed;
 
         _velocity = Mathf.Lerp(_velocity, targetVelocity, Time.deltaTime * 5f);
 
-        animator.SetFloat(_velocityHash, _velocity);
+        _animator.SetFloat(_velocityHash, _velocity);
     }
 
     // 敵を完全に止める
     private void StopEnemyMovement()
     {
-        agent.isStopped = true;
-        animator.SetFloat(_velocityHash, 0f);
+        _agent.isStopped = true;
+        _animator.SetFloat(_velocityHash, 0f);
         enabled = false;
     }
 
